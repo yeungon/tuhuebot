@@ -21,7 +21,7 @@ func main() {
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
 
-	//fmt.Println("Hello, World!")
+	fmt.Println("Hi, your bot is running as expected!")
 
 	b, err := tele.NewBot(pref)
 	if err != nil {
@@ -31,7 +31,7 @@ func main() {
 
 	b.Handle("/start", func(c tele.Context) error {
 		fmt.Println(c.Text())
-		return c.Send("Hello, how are you")
+		return c.Send("Hi, chào bạn đến với bot học tập KTU. Chúc bạn một ngày tốt lành. Xin lựa chọn tác vụ phía dưới")
 	})
 
 	b.Start()

@@ -21,7 +21,8 @@
 go.work
 
 #built application
-.kiwi
+bin
+bin/*
 
 #database 
 #This .gitignore file configuration first ignores all files in the root directory (/*) and then explicitly whitelists (with !) .go files inside the config directory (/config/*.go).
