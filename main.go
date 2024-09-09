@@ -21,17 +21,37 @@ func main() {
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
 
-	fmt.Println("Hi, your bot is running as expected!")
-
 	b, err := tele.NewBot(pref)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
+	fmt.Println("Hi, your bot is running as expected!")
+
 	b.Handle("/start", func(c tele.Context) error {
 		fmt.Println(c.Text())
-		return c.Send("Hi, chào bạn đến với bot học tập KTU. Chúc bạn một ngày tốt lành. Xin lựa chọn tác vụ phía dưới")
+		return c.Send("Hi, chào mừng bạn đến với bot trợ lý học tập KTU. Chúc bạn một ngày tốt lành. Xin lựa chọn tác vụ phía dưới")
+	})
+
+	b.Handle("/about", func(c tele.Context) error {
+		fmt.Println(c.Text())
+		return c.Send("Đây là bot hỗ trợ tự động")
+	})
+
+	b.Handle("/qa", func(c tele.Context) error {
+		fmt.Println(c.Text())
+		return c.Send("Hỏi đáp")
+	})
+
+	b.Handle("/guide", func(c tele.Context) error {
+		fmt.Println(c.Text())
+		return c.Send("Hướng dẫn")
+	})
+
+	b.Handle("/help", func(c tele.Context) error {
+		fmt.Println(c.Text())
+		return c.Send("Các gợi ý giúp bạn sử dụng bot tốt hơn")
 	})
 
 	b.Start()

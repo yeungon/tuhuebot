@@ -1,0 +1,10 @@
+[Unit]
+Description=TUHUEBOT Go application
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+WorkingDirectory=/www/wwwroot/tuhuebot
+ExecStart=/www/wwwroot/tuhuebot/bin/tuhuebot start
+[Install]
+WantedBy=multi-user.target
