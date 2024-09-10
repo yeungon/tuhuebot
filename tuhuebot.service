@@ -4,7 +4,7 @@ Description=TUHUEBOT Go application
 Type=simple
 Restart=always
 RestartSec=5s
-WorkingDirectory=/www/wwwroot/tuhuebot
-ExecStart=/www/wwwroot/tuhuebot/bin/tuhuebot start
+WorkingDirectory=/www/wwwroot/tuhue.bot/tuhuebot
+ExecStart=/www/wwwroot/tuhue.bot/tuhuebot/bin/tuhuebot start
 [Install]
 WantedBy=multi-user.target
