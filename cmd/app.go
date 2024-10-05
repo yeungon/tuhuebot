@@ -11,7 +11,6 @@ import (
 )
 
 func Init() {
-
 	var err = godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -29,14 +28,7 @@ func Init() {
 		log.Fatal(err)
 		return
 	}
-
 	fmt.Println("Hi, your bot is running as expected!")
 	Handle(b)
-	b.Handle(tele.OnText, func(c tele.Context) error {
-		// All the text messages that weren't
-		// captured by existing handlers.
-		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")
-	})
-
 	b.Start()
 }

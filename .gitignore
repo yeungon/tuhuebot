@@ -31,3 +31,5 @@ config/*
 #
 
 .env
+
+.vscode
