@@ -5,7 +5,7 @@ import (
 )
 
 func Help(b *tele.Bot) {
-	b.Handle("/qa", func(c tele.Context) error {
+	b.Handle("/help", func(c tele.Context) error {
 		return c.Send("Các gợi ý giúp bạn sử dụng bot tốt hơn")
 	})
 }

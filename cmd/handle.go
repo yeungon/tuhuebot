@@ -12,10 +12,5 @@ func Handle(b *tele.Bot) {
 	handle.Help(b)
 	handle.Start(b)
 	handle.Tailieu(b)
-
-	b.Handle(tele.OnText, func(c tele.Context) error {
-		// All the text messages that weren't
-		// captured by existing handlers.
-		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")
-	})
+	handle.Other(b) //Should be put at the end of the list.
 }

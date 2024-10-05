@@ -5,7 +5,7 @@ import (
 )
 
 func Tailieu(b *tele.Bot) {
-	b.Handle("/qa", func(c tele.Context) error {
+	b.Handle("/tailieu", func(c tele.Context) error {
 		return c.Send("Hi, tài liệu")
 	})
 }

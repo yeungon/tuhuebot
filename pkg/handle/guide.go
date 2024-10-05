@@ -5,7 +5,7 @@ import (
 )
 
 func Guide(b *tele.Bot) {
-	b.Handle("/qa", func(c tele.Context) error {
+	b.Handle("/guide", func(c tele.Context) error {
 		return c.Send("Hướng dẫn")
 	})
 }
