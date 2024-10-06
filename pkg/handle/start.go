@@ -3,20 +3,29 @@ package handle
 import (
 	"fmt"
 
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
+
+func Name(firstName, username string) string {
+	if len(firstName) == 0 {
+		return username
+	} else {
+		return firstName
+	}
+}
 
 func Start(b *tele.Bot) {
 	b.Handle("/start", func(c tele.Context) error {
 		var (
 			user    = c.Sender()
-			intro   = "Xin chào bạn"
+			intro   = "Welcome onboard"
 			welcome = "Chào mừng bạn đến với bot hỗ trợ học tập tự động. Chúc bạn một ngày tốt lành."
 		)
-
-		fmt.Println(user)
+		firstName := user.FirstName
 		username := user.Username
-		introduction := fmt.Sprintf("%s %s. %s", intro, username, welcome)
-		return c.Reply(introduction)
+		name := Name(firstName, username)
+		introduction := fmt.Sprintf("%s %s. %s", intro, name, welcome)
+		return c.Send(introduction, helpers.MainMenu_InlineKeys)
 	})
 }
