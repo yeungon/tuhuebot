@@ -21,7 +21,7 @@ func Init() {
 		Token:  os.Getenv("TOKEN"),
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
-
+	// https://github.com/go-telebot/telebot?tab=readme-ov-file#keyboards
 	b, err := tele.NewBot(Pref)
 
 	if err != nil {
