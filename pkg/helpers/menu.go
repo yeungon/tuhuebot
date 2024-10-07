@@ -31,7 +31,7 @@ var Btn4 = tele.InlineButton{
 
 var Btn5 = tele.InlineButton{
 	Unique: "btn_callback5",
-	Text:   "Bài tập",
+	Text:   "Thông tin hữu ích",
 	Data:   "button5_clicked",
 }
 

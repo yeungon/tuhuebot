@@ -9,7 +9,7 @@ func Handle(b *tele.Bot) {
 	handle.About(b)
 	handle.Qa(b)
 	handle.Guide(b)
-	handle.Contact(b)
+	handle.Info(b)
 	handle.Start(b)
 	handle.Tailieu(b)
 	handle.Photo(b)
