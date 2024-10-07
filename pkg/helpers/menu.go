@@ -29,8 +29,8 @@ var Btn4 = tele.InlineButton{
 	Data:   "button4_clicked",
 }
 
-var Btn5 = tele.InlineButton{
-	Unique: "btn_callback5",
+var Info = tele.InlineButton{
+	Unique: "thongtinhuuich",
 	Text:   "Thông tin hữu ích",
 	Data:   "button5_clicked",
 }
@@ -42,6 +42,6 @@ var MainMenu_InlineKeys = &tele.ReplyMarkup{
 		{Btn2}, // Row 2: Button 2
 		{Btn3}, // Row 3: Button 3
 		{Btn4}, // Row 4: Button 4
-		{Btn5}, // Row 5: Button 5
+		{Info}, // Row 5: Button 5
 	},
 }

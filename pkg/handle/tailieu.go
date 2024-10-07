@@ -34,7 +34,7 @@ func Tailieu(b *tele.Bot) { // Define the inline button
 	})
 
 	b.Handle(&btn1, func(c tele.Context) error {
-		return c.Send("Tuyển tập các đề thi năm trước!")
+		return c.Send("Tuyển tập các đề thi năm trước (inside handle/tailieu)!")
 	})
 
 	b.Handle(&btn2, func(c tele.Context) error {

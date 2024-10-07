@@ -1,6 +1,7 @@
 package handle
 
 import (
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -19,7 +20,6 @@ func Info(b *tele.Bot) {
 	// }
 
 	// return nil
-
 	// Define the first inline button
 	sodotruong := tele.InlineButton{
 		Unique: "btn_callback_sodotruong",
@@ -30,7 +30,7 @@ func Info(b *tele.Bot) {
 	// Define the second inline button
 	btn2 := tele.InlineButton{
 		Unique: "btn_callback2",
-		Text:   "Đề cương",
+		Text:   "Đang cập nhật...",
 		Data:   "button2_clicked",
 	}
 
@@ -42,18 +42,30 @@ func Info(b *tele.Bot) {
 	}
 
 	b.Handle("/info", func(c tele.Context) error {
-
 		// Create the reply markup and add the button
 		return c.Send("Một số thông tin hữu tích:\n\n", inlineKeys)
 
 	})
 
+	b.Handle("info", func(c tele.Context) error {
+		// Create the reply markup and add the button
+		return c.Send("Một số thông tin hữu tích:\n\n", inlineKeys)
+
+	})
+
+	b.Handle(&helpers.Info, func(c tele.Context) error {
+		return c.Send("Một số thông tin hữu tích:\n\n", inlineKeys)
+	})
+
 	b.Handle(&sodotruong, func(c tele.Context) error {
-		return c.Send("Sơ đồ trường!")
+		link := "https://tieuhoc.org/map/sodo.jpg"
+		photo := &tele.Photo{File: tele.FromURL(link)}
+		return c.Send(photo)
+
 	})
 
 	b.Handle(&btn2, func(c tele.Context) error {
-		return c.Send("Bạn đang xem các đề thi năm trước, giúp hỗ trợ bạn ôn thi tốt hơn!")
+		return c.Send("Chờ bổ sung dữ liệu!")
 	})
 
 }
