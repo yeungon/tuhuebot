@@ -10,7 +10,8 @@ func Other(b *tele.Bot) {
 	b.Handle(tele.OnText, func(c tele.Context) error {
 		// All the text messages that weren't
 		// captured by existing handlers.
-		fmt.Println(tele.OnPhoto)
+		text := c.Text()
+		fmt.Println(text)
 		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")
 	})
 

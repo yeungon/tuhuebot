@@ -5,26 +5,26 @@ import (
 )
 
 // Define five inline buttons
-var Btn1 = tele.InlineButton{
-	Unique: "btn_callback1",
-	Text:   "Đề thi",
+var Intro = tele.InlineButton{
+	Unique: "btn_callback1_gioithieu",
+	Text:   "Giới thiệu",
 	Data:   "button1_clicked",
 }
 
-var Btn2 = tele.InlineButton{
-	Unique: "btn_callback2",
-	Text:   "Đề cương",
+var QA = tele.InlineButton{
+	Unique: "btn_callback2_qa",
+	Text:   "Hỏi - Đáp",
 	Data:   "button2_clicked",
 }
 
-var Btn3 = tele.InlineButton{
-	Unique: "btn_callback3",
-	Text:   "Giáo trình",
+var Guide = tele.InlineButton{
+	Unique: "btn_callback3_guide",
+	Text:   "Hướng dẫn",
 	Data:   "button3_clicked",
 }
 
-var Btn4 = tele.InlineButton{
-	Unique: "btn_callback4",
+var Materials = tele.InlineButton{
+	Unique: "btn_callback4_material",
 	Text:   "Tài liệu",
 	Data:   "button4_clicked",
 }
@@ -38,10 +38,10 @@ var Info = tele.InlineButton{
 // Export the inline keyboard with 5 buttons
 var MainMenu_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
-		{Btn1}, // Row 1: Button 1
-		{Btn2}, // Row 2: Button 2
-		{Btn3}, // Row 3: Button 3
-		{Btn4}, // Row 4: Button 4
-		{Info}, // Row 5: Button 5
+		{Intro},     // Row 1: Button 1
+		{QA},        // Row 2: Button 2
+		{Guide},     // Row 3: Button 3
+		{Materials}, // Row 4: Button 4
+		{Info},      // Row 5: Button 5
 	},
 }

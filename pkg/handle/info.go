@@ -28,8 +28,8 @@ func Info(b *tele.Bot) {
 	}
 
 	// Define the second inline button
-	btn2 := tele.InlineButton{
-		Unique: "btn_callback2",
+	dangcapnhat := tele.InlineButton{
+		Unique: "btn_callback2_dangcapnhat",
 		Text:   "Đang cập nhật...",
 		Data:   "button2_clicked",
 	}
@@ -37,8 +37,8 @@ func Info(b *tele.Bot) {
 	// Create the reply markup and add both buttons in a single row
 	inlineKeys := &tele.ReplyMarkup{}
 	inlineKeys.InlineKeyboard = [][]tele.InlineButton{
-		{sodotruong}, // Row 1: Button 1
-		{btn2},       // Row 2: Button 2
+		{sodotruong},  // Row 1: Button 1
+		{dangcapnhat}, // Row 2: Button 2
 	}
 
 	b.Handle("/info", func(c tele.Context) error {
@@ -64,8 +64,8 @@ func Info(b *tele.Bot) {
 
 	})
 
-	b.Handle(&btn2, func(c tele.Context) error {
-		return c.Send("Chờ bổ sung dữ liệu!")
+	b.Handle(&dangcapnhat, func(c tele.Context) error {
+		return c.Send("Nội dung này đang được bổ sung dữ liệu!")
 	})
 
 }

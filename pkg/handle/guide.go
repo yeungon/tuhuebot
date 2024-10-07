@@ -1,16 +1,18 @@
 package handle
 
 import (
-	"fmt"
-
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
 
 func Guide(b *tele.Bot) {
-	b.Handle("/guide", func(c tele.Context) error {
-		user := c.Sender()
-		fmt.Println(user)
+	content := "Chỉ dẫn giúp bạn học tập tốt hơn!"
 
-		return c.Send("Hướng dẫn")
+	b.Handle("/guide", func(c tele.Context) error {
+		return c.Send(content)
+	})
+
+	b.Handle(&helpers.Guide, func(c tele.Context) error {
+		return c.Send(content)
 	})
 }
