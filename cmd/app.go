@@ -11,7 +11,7 @@ import (
 
 func Init() {
 	config.NewConfig()
-	token := config.NewConfig().Token
+	token := config.Get().Token
 
 	Pref := tele.Settings{
 		Token:  token,

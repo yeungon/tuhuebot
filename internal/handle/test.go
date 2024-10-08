@@ -49,7 +49,7 @@ func Test(b *tele.Bot) {
 
 	// Handle start command
 	b.Handle("/test", func(c tele.Context) error {
-		admin_id := config.NewConfig().AdminID
+		admin_id := config.Get().AdminID
 		current_user := c.Sender()
 		current_user_id := strconv.Itoa(int(current_user.ID))
 		// only handle if the current user is the admin

@@ -16,7 +16,7 @@ type Env struct {
 var once sync.Once
 var env *Env
 
-func NewConfig() *Env {
+func NewConfig() {
 	once.Do(func() {
 		err := godotenv.Load(".env")
 		if err != nil {
@@ -31,7 +31,8 @@ func NewConfig() *Env {
 		}
 
 	})
+}
 
+func Get() *Env {
 	return env
-
 }
