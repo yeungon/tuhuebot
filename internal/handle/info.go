@@ -7,20 +7,12 @@ import (
 
 func Info(b *tele.Bot) {
 
-	// // First message
-	// err := c.Send("First message text")
-	// if err != nil {
-	// 	return err
-	// }
+	kehoachnamhoc := tele.InlineButton{
+		Unique: "btn_callback_kehoachnamhoc",
+		Text:   "Kế hoạch năm học",
+		Data:   "button1_clicked",
+	}
 
-	// // Second message
-	// err = c.Send("Second message text")
-	// if err != nil {
-	// 	return err
-	// }
-
-	// return nil
-	// Define the first inline button
 	sodotruong := tele.InlineButton{
 		Unique: "btn_callback_sodotruong",
 		Text:   "Sơ đồ trường",
@@ -28,17 +20,18 @@ func Info(b *tele.Bot) {
 	}
 
 	// Define the second inline button
-	dangcapnhat := tele.InlineButton{
-		Unique: "btn_callback2_dangcapnhat",
-		Text:   "Đang cập nhật...",
+	sotay_sinhvien := tele.InlineButton{
+		Unique: "btn_callback2_sotaysinhvien",
+		Text:   "Sổ tay sinh viên",
 		Data:   "button2_clicked",
 	}
 
 	// Create the reply markup and add both buttons in a single row
 	inlineKeys := &tele.ReplyMarkup{}
 	inlineKeys.InlineKeyboard = [][]tele.InlineButton{
-		{sodotruong},  // Row 1: Button 1
-		{dangcapnhat}, // Row 2: Button 2
+		{sodotruong},     // Row 1: Button 1
+		{sotay_sinhvien}, // Row 2: Button 2
+		{kehoachnamhoc},
 	}
 
 	b.Handle("/info", func(c tele.Context) error {
@@ -64,8 +57,15 @@ func Info(b *tele.Bot) {
 
 	})
 
-	b.Handle(&dangcapnhat, func(c tele.Context) error {
-		return c.Send("Nội dung này đang được bổ sung dữ liệu!")
+	b.Handle(&sotay_sinhvien, func(c tele.Context) error {
+		link := "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
+		return c.Send(link)
+	})
+
+	b.Handle(&kehoachnamhoc, func(c tele.Context) error {
+		link := "https://tieuhoc.org/master/2024_2025.jpg"
+		photo := &tele.Photo{File: tele.FromURL(link)}
+		return c.Send(photo)
 	})
 
 }
