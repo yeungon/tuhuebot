@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strconv"
 
+	"github.com/yeungon/tuhuebot/internal/config"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -17,7 +18,7 @@ func Test(b *tele.Bot) {
 	// Create an inline button with data
 	inlineBtn := tele.InlineButton{
 		Unique: "my_callback",
-		Text:   "Click me",
+		Text:   callback_random,
 		Data:   callback_random, // Set the callback data
 	}
 
@@ -26,10 +27,10 @@ func Test(b *tele.Bot) {
 		random := rand.Intn(100)
 		callback_random := strconv.Itoa(random)
 
-		// Create a new button with updated random number as data <-- update the previous inline button instead of creating a new one
+		// <-- update the previous inline button instead of creating a new one
 		inlineBtn = tele.InlineButton{
 			Unique: "my_callback",
-			Text:   "Click me again!",
+			Text:   callback_random,
 			Data:   callback_random,
 		}
 
@@ -48,6 +49,13 @@ func Test(b *tele.Bot) {
 
 	// Handle start command
 	b.Handle("/test", func(c tele.Context) error {
+		admin_id := config.NewConfig().AdminID
+		current_user := c.Sender()
+		current_user_id := strconv.Itoa(int(current_user.ID))
+		// only handle if the current user is the admin
+		if admin_id != current_user_id {
+			return nil
+		}
 		// Create a reply with the inline button
 		inlineKeys := [][]tele.InlineButton{
 			{inlineBtn},
@@ -56,12 +64,4 @@ func Test(b *tele.Bot) {
 			InlineKeyboard: inlineKeys,
 		})
 	})
-
-	// b.Handle("/qa", func(c tele.Context) error {
-	// 	return c.Reply("hỏi đáp")
-	// })
-
-	// b.Handle(&helpers.QA, func(c tele.Context) error {
-	// 	return c.Send("hỏi đáp")
-	// })
 }

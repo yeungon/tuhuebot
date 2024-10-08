@@ -3,22 +3,18 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"os"
 	"time"
 
-	"github.com/joho/godotenv"
+	"github.com/yeungon/tuhuebot/internal/config"
 	tele "gopkg.in/telebot.v3"
 )
 
 func Init() {
-	var err = godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-
-	}
+	config.NewConfig()
+	token := config.NewConfig().Token
 
 	Pref := tele.Settings{
-		Token:  os.Getenv("TOKEN"),
+		Token:  token,
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
 	// https://github.com/go-telebot/telebot?tab=readme-ov-file#keyboards
