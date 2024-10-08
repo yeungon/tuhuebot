@@ -16,15 +16,11 @@ func Other(b *tele.Bot) {
 	})
 
 	b.Handle(tele.OnPhoto, func(c tele.Context) error {
-		// All the text messages that weren't
-		// captured by existing handlers.
 		fmt.Println(tele.OnPhoto)
 		return c.Send("Sorry, bot không xử lý file ảnh bạn gửi lên!")
 	})
 
 	b.Handle(tele.OnPoll, func(c tele.Context) error {
-		// All the text messages that weren't
-		// captured by existing handlers.
 		fmt.Println(tele.OnPoll)
 		return c.Send("Sorry, bot không xử lý bảng poll bạn gửi lên!")
 	})

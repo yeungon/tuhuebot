@@ -26,9 +26,9 @@ func Test(b *tele.Bot) {
 		random := rand.Intn(100)
 		callback_random := strconv.Itoa(random)
 
-		// Create a new button with updated random number as data
-		newInlineBtn := tele.InlineButton{
-			Unique: "new_callback",
+		// Create a new button with updated random number as data <-- update the previous inline button instead of creating a new one
+		inlineBtn = tele.InlineButton{
+			Unique: "my_callback",
 			Text:   "Click me again!",
 			Data:   callback_random,
 		}
@@ -38,7 +38,7 @@ func Test(b *tele.Bot) {
 
 		// Send a new button with updated data
 		inlineKeys := [][]tele.InlineButton{
-			{newInlineBtn},
+			{inlineBtn},
 		}
 
 		return c.Send("Click the button below for a new random number:", &tele.ReplyMarkup{
