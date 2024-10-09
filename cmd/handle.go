@@ -14,6 +14,7 @@ func Handle(b *tele.Bot) {
 	handle.Tailieu(b)
 	handle.Photo(b)
 	handle.Radio(b)
+	handle.Event(b)
 	handle.Test(b)
 	handle.Other(b) //Should be put at the end of the list.
 }

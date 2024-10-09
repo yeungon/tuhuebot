@@ -35,12 +35,19 @@ var Info = tele.InlineButton{
 	Data:   "button5_clicked",
 }
 
+var Event = tele.InlineButton{
+	Unique: "event_tracking",
+	Text:   "Sự kiện",
+	Data:   "button6_clicked",
+}
+
 // Export the inline keyboard with 5 buttons
 var MainMenu_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
-		{Intro},     // Row 1: Button 1
-		{QA},        // Row 2: Button 2
-		{Guide},     // Row 3: Button 3
+		{Intro},
+		{Event},
+		{QA},
+		{Guide},
 		{Materials}, // Row 4: Button 4
 		{Info},      // Row 5: Button 5
 	},
