@@ -9,8 +9,10 @@ import (
 )
 
 type Env struct {
-	Token   string
-	AdminID string
+	Token         string
+	AdminID       string
+	XATA_API_KEY  string
+	XATA_BASE_URL string
 }
 
 var once sync.Once
@@ -25,9 +27,14 @@ func NewConfig() {
 
 		token := os.Getenv("TOKEN")
 		admin_id := os.Getenv("ADMIN_ID")
+		xata_api_key := os.Getenv("XATA_API_KEY")
+		xata_base_url := os.Getenv("XATA_BASE_URL")
+
 		env = &Env{
-			Token:   token,
-			AdminID: admin_id,
+			Token:         token,
+			AdminID:       admin_id,
+			XATA_API_KEY:  xata_api_key,
+			XATA_BASE_URL: xata_base_url,
 		}
 
 	})

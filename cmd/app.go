@@ -11,15 +11,15 @@ import (
 
 func Init() {
 	config.NewConfig()
-	token := config.Get().Token
+	//database.Query()
 
+	token := config.Get().Token
 	Pref := tele.Settings{
 		Token:  token,
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
-	// https://github.com/go-telebot/telebot?tab=readme-ov-file#keyboards
-	b, err := tele.NewBot(Pref)
 
+	b, err := tele.NewBot(Pref)
 	if err != nil {
 		log.Fatal(err)
 		return
