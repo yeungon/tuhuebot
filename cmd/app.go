@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/internal/database"
 	tele "gopkg.in/telebot.v3"
 )
 
 func Init() {
 	config.NewConfig()
-	//database.Query()
+	database.Connect()
 
 	token := config.Get().Token
 	Pref := tele.Settings{

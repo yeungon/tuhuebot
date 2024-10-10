@@ -3,11 +3,9 @@ package database
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/xataio/xata-go/xata"
-	"github.com/yeungon/tuhuebot/internal/config"
 )
 
 type Response struct {
@@ -38,23 +36,7 @@ type Xata struct {
 	Version   int    `json:"version"`
 }
 
-var searchClient *xata.SearchAndFilterClient
-
-var err error
-
-func Query() {
-	var xata_api_key = config.Get().XATA_API_KEY
-	var xata_base_url = config.Get().XATA_BASE_URL
-
-	searchClient, err := xata.NewSearchAndFilterClient(
-		xata.WithAPIKey(xata_api_key),
-		xata.WithBaseURL(xata_base_url),
-	)
-
-	if err != nil {
-		log.Fatalf("Failed to create Search and Filter client: %v", err)
-	}
-
+func Query() Response {
 	// Query the "qa" table (database and branch are passed here)
 	qa, err := searchClient.Query(context.TODO(), xata.QueryTableRequest{
 		BranchRequestOptional: xata.BranchRequestOptional{
@@ -79,10 +61,11 @@ func Query() {
 		log.Fatalf("Error unmarshaling JSON: %v", err)
 	}
 
-	// Iterate through records and print the id, question, and answer
-	for _, record := range response.Records {
-		fmt.Printf("ID: %s\n", record.ID)
-		fmt.Printf("Question: %s\n", record.Question)
-		fmt.Printf("Answer: %s\n\n", record.Answer)
-	}
+	return response
+	// // Iterate through records and print the id, question, and answer
+	// for _, record := range response.Records {
+	// 	fmt.Printf("ID: %s\n", record.ID)
+	// 	fmt.Printf("Question: %s\n", record.Question)
+	// 	fmt.Printf("Answer: %s\n\n", record.Answer)
+	// }
 }

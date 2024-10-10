@@ -1,25 +1,23 @@
 package database
 
-func Register() {
+import (
+	"log"
 
+	"github.com/xataio/xata-go/xata"
+	"github.com/yeungon/tuhuebot/internal/config"
+)
+
+var searchClient xata.SearchAndFilterClient
+var err error
+
+func Connect() {
+	var xata_api_key = config.Get().XATA_API_KEY
+	var xata_base_url = config.Get().XATA_BASE_URL
+	searchClient, err = xata.NewSearchAndFilterClient(
+		xata.WithAPIKey(xata_api_key),
+		xata.WithBaseURL(xata_base_url),
+	)
+	if err != nil {
+		log.Fatalf("Failed to create Search and Filter client: %v", err)
+	}
 }
-
-// func Connect() {
-// 	XATA_API_KEY := config.Get().XATA_API_KEY
-// 	workspaceCli, err := xata.NewWorkspacesClient(xata.WithAPIKey(XATA_API_KEY))
-
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	resp, err := workspaceCli.List(context.Background())
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Printf("%#v\n", *resp.Workspaces[0])
-
-// 	item := *resp.Workspaces[0]
-// 	fmt.Printf("%s\n", item.Role.String())
-
-// }

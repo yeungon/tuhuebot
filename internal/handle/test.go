@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/pkg/cache"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -49,6 +50,9 @@ func Test(b *tele.Bot) {
 
 	// Handle start command
 	b.Handle("/test", func(c tele.Context) error {
+		// test cache
+		cache.TestCache()
+
 		admin_id := config.Get().AdminID
 		current_user := c.Sender()
 		current_user_id := strconv.Itoa(int(current_user.ID))
