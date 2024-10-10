@@ -8,7 +8,7 @@ import (
 var (
 	thesis_requirement    = "https://tieuhoc.org/static/images/2024_quydinh_lam_khoaluan.png"
 	master_plan           = "https://tieuhoc.org/master/2024_2025.jpg"
-	sotay_sinhvien        = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
+	sotay_sinhvien_url    = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
 	dieukien_lam_khoaluan = `Điều kiện để sinh viên được đăng ký làm KL: 
 						⠀⋆˚✿˖°⋆˚✿˖°⋆˚✿˖°
 a. Để được nhận làm KL, sinh viên cần hội đủ các điều kiện sau đây:
@@ -24,10 +24,22 @@ b. Sinh viên làm đề tài NCKH độc lập và đã nghiệm thu được �
 c. Mỗi Khoa xét duyệt số lượng SV được làm KL theo ngành học và không vượt quá 50% tổng số SV của khóa học thuộc ngành xét.
 
 d. Những trường hợp đặc biệt sẽ trình Hiệu trưởng quyết định.`
+	dieukien_lamtieuluan = `
+Điều kiện để sinh viên được làm tiểu luận (TL): 
+
+1. SV được đăng ký thực hiện TL sau khi đã tích luỹ tối thiểu 30 TC, có điểm TBC tích lũy đạt từ 2,5 trở lên và tối đa chỉ có 1 HP (có từ 2 TC trở lên) chưa đạt tích lũy.
+
+2. SV thực hiện TL phải tham gia học tập chuyên cần và thực hiện các yêu cầu học tập của GV.
+
+3. Được GV phụ trách học phần đề nghị, Tổ trưởng chuyên môn duyệt và báo cáo cho Trưởng khoa.
+
+4. Trong mỗi học kỳ, một SV chỉ được phép thực hiện 01 TL.
+
+Quy định chi tiết tại: https://tieuhoc.org/vanban/quydinh/quy_dinh_lam_khoaluan_tieuluan_20191101081351_2505_qd_dhsp.pdf
+`
 )
 
 func Info(b *tele.Bot) {
-
 	kehoachnamhoc := tele.InlineButton{
 		Unique: "btn_callback_kehoachnamhoc",
 		Text:   "Kế hoạch năm học",
@@ -54,12 +66,19 @@ func Info(b *tele.Bot) {
 		Data:   "button2_clicked",
 	}
 
+	quydinh_lamtieuluan := tele.InlineButton{
+		Unique: "btn_callback2_quydinh_lam_tieuluan",
+		Text:   "Điều kiện để được làm tiểu luận",
+		Data:   "button2_clicked",
+	}
+
 	// Create the reply markup and add both buttons in a single row
 	inlineKeys := &tele.ReplyMarkup{}
 	inlineKeys.InlineKeyboard = [][]tele.InlineButton{
 		{sodotruong},     // Row 1: Button 1
 		{sotay_sinhvien}, // Row 2: Button 2
 		{kehoachnamhoc},
+		{quydinh_lamtieuluan},
 		{quydinh_lamkhoaluan},
 	}
 
@@ -87,7 +106,7 @@ func Info(b *tele.Bot) {
 	})
 
 	b.Handle(&sotay_sinhvien, func(c tele.Context) error {
-		return c.Send(sotay_sinhvien)
+		return c.Send(sotay_sinhvien_url)
 	})
 
 	b.Handle(&kehoachnamhoc, func(c tele.Context) error {
@@ -95,10 +114,14 @@ func Info(b *tele.Bot) {
 		return c.Send(photo)
 	})
 
+	b.Handle(&quydinh_lamtieuluan, func(c tele.Context) error {
+		return c.Send(dieukien_lamtieuluan)
+
+	})
+
 	b.Handle(&quydinh_lamkhoaluan, func(c tele.Context) error {
 		//photo := &tele.Photo{File: tele.FromURL(thesis_requirement)}
 		return c.Send(dieukien_lam_khoaluan)
-		//return c.Send(photo)
 	})
 
 }
