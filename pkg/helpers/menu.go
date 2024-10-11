@@ -44,11 +44,8 @@ var Event = tele.InlineButton{
 // Export the inline keyboard with 5 buttons
 var MainMenu_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
-		{Intro},
-		{Event},
-		{QA},
-		{Guide},
-		{Materials}, // Row 4: Button 4
-		{Info},      // Row 5: Button 5
+		{Intro, Event},
+		{QA, Guide},
+		{Materials, Info}, // Row 4: Button 4
 	},
 }

@@ -20,12 +20,14 @@ func Start(b *tele.Bot) {
 		var (
 			user    = c.Sender()
 			intro   = "Welcome onboard"
-			welcome = "Chào mừng bạn đến với bot hỗ trợ học tập tự động. Chúc bạn một ngày tốt lành.\n\n Dưới đây là các chức năng, thông tin chính hiện có của bot:"
+			welcome = "Chào mừng bạn đến với bot hỗ trợ học tập tự động. Chúc bạn một ngày tốt lành.\n\nDưới đây là các chức năng, thông tin chính hiện có của bot:"
 		)
 		firstName := user.FirstName
 		username := user.Username
 		name := Name(firstName, username)
 		introduction := fmt.Sprintf("%s %s. %s", intro, name, welcome)
-		return c.Send(introduction, helpers.MainMenu_InlineKeys)
+		fmt.Println(introduction)
+		c.Send(introduction, helpers.MainMenu_InlineKeys)
+		return nil
 	})
 }

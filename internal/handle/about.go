@@ -18,18 +18,21 @@ func About(b *tele.Bot) {
 	b.Handle("/about", func(c tele.Context) error {
 		c.Send(intro)
 		c.Send(photo)
+		c.Send(helpers.AskMenu_InlineKeys)
 		return nil
 	})
 
 	b.Handle("about", func(c tele.Context) error {
 		c.Send(intro)
 		c.Send(photo)
+		c.Send(helpers.AskMenu_InlineKeys)
 		return nil
 	})
 
 	b.Handle(&helpers.Intro, func(c tele.Context) error {
 		c.Send(intro)
 		c.Send(photo)
+		c.Send(helpers.AskMenu_InlineKeys)
 		return nil
 	})
 }
