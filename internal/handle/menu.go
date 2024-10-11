@@ -7,7 +7,8 @@ import (
 
 func Menu(b *tele.Bot) {
 	b.Handle(&helpers.AskMenu, func(c tele.Context) error {
-		return c.Send("Main menu")
+		intro := "🅰🅱©↩📧🎏⛽♓ℹ🗾🎋👢Ⓜ♑⭕🅿♌⚡🌴⛎✌Ⓩ"
+		return c.Send(intro, helpers.MainMenu_InlineKeys)
 	})
 
 }

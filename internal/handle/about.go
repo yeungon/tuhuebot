@@ -14,25 +14,25 @@ var (
 	}
 )
 
+func dispath(c tele.Context) {
+	c.Send(intro)
+	c.Send(photo)
+	c.Send("⭕🅿♌⚡🌴⛎♈📈❌✌Ⓩ", helpers.AskMenu_InlineKeys)
+}
+
 func About(b *tele.Bot) {
 	b.Handle("/about", func(c tele.Context) error {
-		c.Send(intro)
-		c.Send(photo)
-		c.Send(helpers.AskMenu_InlineKeys)
+		dispath(c)
 		return nil
 	})
 
 	b.Handle("about", func(c tele.Context) error {
-		c.Send(intro)
-		c.Send(photo)
-		c.Send(helpers.AskMenu_InlineKeys)
+		dispath(c)
 		return nil
 	})
 
 	b.Handle(&helpers.Intro, func(c tele.Context) error {
-		c.Send(intro)
-		c.Send(photo)
-		c.Send(helpers.AskMenu_InlineKeys)
+		dispath(c)
 		return nil
 	})
 }
