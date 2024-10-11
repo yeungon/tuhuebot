@@ -68,4 +68,14 @@ func Test(b *tele.Bot) {
 			InlineKeyboard: inlineKeys,
 		})
 	})
+
+	b.Handle("/html", func(c tele.Context) error {
+		//fmt.Println(c.Message().Text)
+		hello := "Hello world"
+		answerMsgText := "<b>Trả lời (tham khảo)!</b>🍟" + hello
+		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
+			ParseMode: "HTML",
+		})
+		return nil
+	})
 }

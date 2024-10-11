@@ -59,4 +59,5 @@ func TestCache() {
 
 	// Print the retrieved data
 	fmt.Printf("Retrieved data: %+v\n", retrievedData)
+	fmt.Println("name", retrievedData.Name)
 }

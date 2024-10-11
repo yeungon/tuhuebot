@@ -11,10 +11,10 @@ import (
 )
 
 func Init() {
-	config.NewConfig()
+	config.New()
 	database.Connect()
-
 	token := config.Get().Token
+
 	Pref := tele.Settings{
 		Token:  token,
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},

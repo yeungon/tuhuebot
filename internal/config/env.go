@@ -18,7 +18,7 @@ type Env struct {
 var once sync.Once
 var env *Env
 
-func NewConfig() {
+func New() {
 	once.Do(func() {
 		err := godotenv.Load(".env")
 		if err != nil {
