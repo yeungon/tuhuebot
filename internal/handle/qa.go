@@ -16,17 +16,20 @@ func FetchQa(b *tele.Bot, c tele.Context) {
 
 	for index, record := range response.Records {
 		fmt.Printf("ID: %s\n", record.ID)
-		index_string := strconv.Itoa(index + 1)
-		questionMsg := "<b>🌓 🅀🅄🄴🅂🅃🄸🄾🄽 </b><i>" + index_string + ": " + record.Question + "</i>"
-		// Reference emoji icon havested here: https://emojipedia.org/first-quarter-moon
-		b.Send(current_user, questionMsg, &tele.SendOptions{
-			ParseMode: "HTML",
-		})
-		// answerMsgTexta := "<b>✅ 🄰🄽🅂🅆🄴🅁: </b>" + record.Answer
-		answerMsgTexta := "<b></b>" + record.Answer
-		b.Send(current_user, answerMsgTexta, &tele.SendOptions{
-			ParseMode: "HTML",
-		})
+		fmt.Println("Published:", record.Published)
+		if record.Published == true {
+			index_string := strconv.Itoa(index + 1)
+			questionMsg := "<b>🌓 🅀🅄🄴🅂🅃🄸🄾🄽 </b><i>" + index_string + ": " + record.Question + "</i>"
+			// Reference emoji icon havested here: https://emojipedia.org/first-quarter-moon
+			b.Send(current_user, questionMsg, &tele.SendOptions{
+				ParseMode: "HTML",
+			})
+			// answerMsgTexta := "<b>✅ 🄰🄽🅂🅆🄴🅁: </b>" + record.Answer
+			answerMsgTexta := "<b></b>" + record.Answer
+			b.Send(current_user, answerMsgTexta, &tele.SendOptions{
+				ParseMode: "HTML",
+			})
+		}
 	}
 }
 

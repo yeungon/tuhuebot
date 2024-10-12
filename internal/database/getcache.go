@@ -37,10 +37,11 @@ type Page struct {
 }
 
 type Record struct {
-	ID       string `json:"id"`
-	Question string `json:"question"`
-	Answer   string `json:"answer"`
-	Xata     Xata   `json:"xata"`
+	ID        string `json:"id"`
+	Question  string `json:"question"`
+	Answer    string `json:"answer"`
+	Xata      Xata   `json:"xata"`
+	Published bool   `json:"published"`
 }
 
 type Xata struct {
@@ -72,6 +73,17 @@ func Query() Response {
 			BranchName:   xata.String("main"),
 		},
 		TableName: "qa",
+		// Reference: https://github.com/xataio/xata-go/blob/main/xata/search_filter_client_test.go
+		Payload: xata.QueryTableRequestPayload{
+			// Columns: []string{"question", "answer"},
+			Filter: &xata.FilterExpression{
+				Any: xata.NewFilterListFromFilterExpressionList([]*xata.FilterExpression{
+					{
+						Exists: xata.String("published"), // Check if 'published' exists (both true and false work)
+					},
+				}),
+			},
+		},
 	})
 	if err != nil {
 		log.Fatalf("Error querying the qa table: %v", err)
