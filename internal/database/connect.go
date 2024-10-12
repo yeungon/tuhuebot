@@ -7,13 +7,13 @@ import (
 	"github.com/yeungon/tuhuebot/internal/config"
 )
 
-var searchClient xata.SearchAndFilterClient
+var SearchClient xata.SearchAndFilterClient
 var err error
 
 func Connect() {
 	var xata_api_key = config.Get().XATA_API_KEY
 	var xata_base_url = config.Get().XATA_BASE_URL
-	searchClient, err = xata.NewSearchAndFilterClient(
+	SearchClient, err = xata.NewSearchAndFilterClient(
 		xata.WithAPIKey(xata_api_key),
 		xata.WithBaseURL(xata_base_url),
 	)

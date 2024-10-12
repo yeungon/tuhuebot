@@ -1,4 +1,4 @@
-package database
+package qa
 
 import (
 	"context"
@@ -8,6 +8,7 @@ import (
 
 	"github.com/allegro/bigcache/v3"
 	"github.com/xataio/xata-go/xata"
+	"github.com/yeungon/tuhuebot/internal/database"
 )
 
 var cache *bigcache.BigCache
@@ -50,7 +51,7 @@ type Xata struct {
 	Version   int    `json:"version"`
 }
 
-func Query() Response {
+func QueryQA() Response {
 	// Cache key (can be dynamic if needed based on the query)
 	cacheKey := "qa_table_data"
 
@@ -67,23 +68,23 @@ func Query() Response {
 	}
 
 	// Cache miss - Query the "qa" table
-	qa, err := searchClient.Query(context.TODO(), xata.QueryTableRequest{
+	qa, err := database.SearchClient.Query(context.TODO(), xata.QueryTableRequest{
 		BranchRequestOptional: xata.BranchRequestOptional{
 			DatabaseName: xata.String("tuhuebot"),
 			BranchName:   xata.String("main"),
 		},
 		TableName: "qa",
 		// Reference: https://github.com/xataio/xata-go/blob/main/xata/search_filter_client_test.go
-		Payload: xata.QueryTableRequestPayload{
-			// Columns: []string{"question", "answer"},
-			Filter: &xata.FilterExpression{
-				Any: xata.NewFilterListFromFilterExpressionList([]*xata.FilterExpression{
-					{
-						Exists: xata.String("published"), // Check if 'published' exists (both true and false work)
-					},
-				}),
-			},
-		},
+		// Payload: xata.QueryTableRequestPayload{
+		// 	// Columns: []string{"question", "answer"},
+		// 	Filter: &xata.FilterExpression{
+		// 		Any: xata.NewFilterListFromFilterExpressionList([]*xata.FilterExpression{
+		// 			{
+		// 				Exists: xata.String("published"), // Check if 'published' exists (both true and false work)
+		// 			},
+		// 		}),
+		// 	},
+		// },
 	})
 	if err != nil {
 		log.Fatalf("Error querying the qa table: %v", err)

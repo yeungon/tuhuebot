@@ -6,9 +6,21 @@ import (
 )
 
 var (
-	thesis_requirement    = "https://tieuhoc.org/static/images/2024_quydinh_lam_khoaluan.png"
-	master_plan           = "https://tieuhoc.org/master/2024_2025.jpg"
-	sotay_sinhvien_url    = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
+	thesis_requirement = "https://tieuhoc.org/static/images/2024_quydinh_lam_khoaluan.png"
+	master_plan        = "https://tieuhoc.org/master/2024_2025.jpg"
+	wifi_password      = "19572010"
+	sotay_sinhvien_url = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
+	dieukien_lam_btl   = `Điều kiện để sinh viên được làm BTL: 
+
+1. SV được đăng ký thực hiện BTL sau khi đã tích luỹ tối thiểu 15 tín chỉ (TC), có điểm TBC tích lũy đạt từ 2,4 trở lên. SV thực hiện BTL phải tham gia học tập
+chuyên cần và thực hiện các yêu cầu học tập của GV.
+2. Được GV phụ trách học phần đề nghị và Tổ trưởng chuyên môn quản lí học phần duyệt.
+3. Trong mỗi học kì, một SV chỉ được phép thực hiện tối đa 02 BTL.
+
+Điều kiện để giảng viên hướng dẫn BTL
+1. Để được tham gia hướng dẫn BTL, GV đã giảng dạy đại học từ 1 năm trở lên. GV dạy học phần nào, thì hướng dẫn và chấm BTL của học phần đó.
+2. Trong một năm học hướng dẫn không quá 12 BTL; không tham gia hướng dẫn BTL của người thân (vợ, chồng, con; anh, chi, em ruột).`
+
 	dieukien_lam_khoaluan = `Điều kiện để sinh viên được đăng ký làm KL: 
 						⠀⋆˚✿˖°⋆˚✿˖°⋆˚✿˖°
 a. Để được nhận làm KL, sinh viên cần hội đủ các điều kiện sau đây:
@@ -59,25 +71,36 @@ func Info(b *tele.Bot) {
 		Data:   "button2_clicked",
 	}
 
-	// Define the second inline button
-	quydinh_lamkhoaluan := tele.InlineButton{
-		Unique: "btn_callback2_quydinh_lamkhoaluan",
-		Text:   "Điều kiện để được làm khóa lụân",
+	matkhau_wifi := tele.InlineButton{
+		Unique: "btn_callback_matkhau_wifi",
+		Text:   "Mật khẩu Wifi",
+		Data:   "button1_clicked",
+	}
+
+	quydinh_lam_btl := tele.InlineButton{
+		Unique: "btn_callback2_quydinh_lam_btl",
+		Text:   "Điều kiện làm bài tập lớn",
+		Data:   "button2_clicked",
+	}
+	quydinh_lamtieuluan := tele.InlineButton{
+		Unique: "btn_callback2_quydinh_lam_tieuluan",
+		Text:   "Điều kiện làm tiểu luận",
 		Data:   "button2_clicked",
 	}
 
-	quydinh_lamtieuluan := tele.InlineButton{
-		Unique: "btn_callback2_quydinh_lam_tieuluan",
-		Text:   "Điều kiện để được làm tiểu luận",
+	// Define the second inline button
+	quydinh_lamkhoaluan := tele.InlineButton{
+		Unique: "btn_callback2_quydinh_lamkhoaluan",
+		Text:   "Điều kiện làm khóa lụân",
 		Data:   "button2_clicked",
 	}
 
 	// Create the reply markup and add both buttons in a single row
 	inlineKeys := &tele.ReplyMarkup{}
 	inlineKeys.InlineKeyboard = [][]tele.InlineButton{
-		{sodotruong},     // Row 1: Button 1
-		{sotay_sinhvien}, // Row 2: Button 2
-		{kehoachnamhoc},
+		{sodotruong, sotay_sinhvien}, // Row 1: Button 1
+		{kehoachnamhoc, matkhau_wifi},
+		{quydinh_lam_btl},
 		{quydinh_lamtieuluan},
 		{quydinh_lamkhoaluan},
 	}
@@ -102,16 +125,24 @@ func Info(b *tele.Bot) {
 		link := "https://tieuhoc.org/map/sodo.jpg"
 		photo := &tele.Photo{File: tele.FromURL(link)}
 		return c.Send(photo)
-
 	})
 
 	b.Handle(&sotay_sinhvien, func(c tele.Context) error {
 		return c.Send(sotay_sinhvien_url)
 	})
 
+	b.Handle(&matkhau_wifi, func(c tele.Context) error {
+		return c.Send(wifi_password)
+	})
+
 	b.Handle(&kehoachnamhoc, func(c tele.Context) error {
 		photo := &tele.Photo{File: tele.FromURL(master_plan)}
 		return c.Send(photo)
+	})
+
+	b.Handle(&quydinh_lam_btl, func(c tele.Context) error {
+		return c.Send(dieukien_lam_btl)
+
 	})
 
 	b.Handle(&quydinh_lamtieuluan, func(c tele.Context) error {
