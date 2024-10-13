@@ -3,6 +3,7 @@ package event
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"time"
 
@@ -16,6 +17,7 @@ var cache *bigcache.BigCache
 // Initialize BigCache
 func init() {
 	var err error
+	fmt.Print("Running? - inside database/database/event/get")
 	cache, err = bigcache.New(context.Background(), bigcache.DefaultConfig(10*time.Minute))
 	if err != nil {
 		log.Fatalf("Failed to initialize BigCache: %v", err)
@@ -54,7 +56,6 @@ type Xata struct {
 func QueryEvent() Response {
 	// Cache key (can be dynamic if needed based on the query)
 	cacheKey := "event_table_data"
-
 	// Check if data is in the cache
 	cachedData, err := cache.Get(cacheKey)
 	if err == nil {
@@ -62,7 +63,7 @@ func QueryEvent() Response {
 		var cachedResponse Response
 		err = json.Unmarshal(cachedData, &cachedResponse)
 		if err == nil {
-			log.Println("Returning data from cache")
+			log.Println("Returning data from cache event")
 			return cachedResponse
 		}
 	}

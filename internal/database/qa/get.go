@@ -3,6 +3,7 @@ package qa
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"time"
 
@@ -16,6 +17,7 @@ var cache *bigcache.BigCache
 // Initialize BigCache
 func init() {
 	var err error
+	fmt.Print("Running? - inside database/database/QA/get")
 	cache, err = bigcache.New(context.Background(), bigcache.DefaultConfig(10*time.Minute))
 	if err != nil {
 		log.Fatalf("Failed to initialize BigCache: %v", err)
