@@ -8,7 +8,7 @@ import (
 var (
 	thesis_requirement = "https://tieuhoc.org/static/images/2024_quydinh_lam_khoaluan.png"
 	master_plan        = "https://tieuhoc.org/master/2024_2025.jpg"
-	wifi_password      = "19572010"
+	wifi_password      = "dhsph19572010"
 	sotay_sinhvien_url = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
 	dieukien_lam_btl   = `Điều kiện để sinh viên được làm BTL: 
 
@@ -48,6 +48,17 @@ d. Những trường hợp đặc biệt sẽ trình Hiệu trưởng quyết đ
 4. Trong mỗi học kỳ, một SV chỉ được phép thực hiện 01 TL.
 
 Quy định chi tiết tại: https://tieuhoc.org/vanban/quydinh/quy_dinh_lam_khoaluan_tieuluan_20191101081351_2505_qd_dhsp.pdf
+`
+	dieukien_xet_totnghiep = `
+1) Hoàn thành đủ số tín chỉ, đúng số môn theo chương trình của khóa mình theo học.
+
+2) Có chứng chỉ Giáo dục thể chất.
+
+3) Có chứng chỉ Giáo dục quốc phòng.
+
+4) Có chứng chỉ ngoại ngữ B1 hoặc tương đương. Sinh viên Lào, Campuchia được miễn chứng chỉ ngoại ngữ.
+
+5) Làm đơn xét tốt nghiệp.
 `
 )
 
@@ -95,6 +106,13 @@ func Info(b *tele.Bot) {
 		Data:   "button2_clicked",
 	}
 
+	// Define the second inline button
+	quydinh_xet_totnghiep := tele.InlineButton{
+		Unique: "btn_callback2_quydinh_xettotnghiep",
+		Text:   "Điều kiện xét tốt nghiệp",
+		Data:   "button2_clicked",
+	}
+
 	// Create the reply markup and add both buttons in a single row
 	inlineKeys := &tele.ReplyMarkup{}
 	inlineKeys.InlineKeyboard = [][]tele.InlineButton{
@@ -103,6 +121,7 @@ func Info(b *tele.Bot) {
 		{quydinh_lam_btl},
 		{quydinh_lamtieuluan},
 		{quydinh_lamkhoaluan},
+		{quydinh_xet_totnghiep},
 	}
 
 	b.Handle("/info", func(c tele.Context) error {
@@ -151,8 +170,11 @@ func Info(b *tele.Bot) {
 	})
 
 	b.Handle(&quydinh_lamkhoaluan, func(c tele.Context) error {
-		//photo := &tele.Photo{File: tele.FromURL(thesis_requirement)}
 		return c.Send(dieukien_lam_khoaluan)
+	})
+
+	b.Handle(&quydinh_xet_totnghiep, func(c tele.Context) error {
+		return c.Send(dieukien_xet_totnghiep)
 	})
 
 }
