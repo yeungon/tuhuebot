@@ -17,8 +17,16 @@ var cache *bigcache.BigCache
 // Initialize BigCache
 func init() {
 	var err error
-	fmt.Print("Running? - inside database/database/QA/get")
-	cache, err = bigcache.New(context.Background(), bigcache.DefaultConfig(10*time.Minute))
+	config := bigcache.Config{
+		Shards:     1024,
+		Verbose:    true,
+		LifeWindow: 10 * time.Minute,
+		//CleanWindow: 30 * time.Second,
+		OnRemoveWithReason: func(key string, entry []byte, reason bigcache.RemoveReason) {
+			fmt.Printf("Entry with key '%s' was removed! Reason: %v\n", key, reason)
+		},
+	}
+	cache, err = bigcache.New(context.Background(), config)
 	if err != nil {
 		log.Fatalf("Failed to initialize BigCache: %v", err)
 	}

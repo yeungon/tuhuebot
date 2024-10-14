@@ -10,12 +10,16 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
+var currentMonth int
+
 func Event(b *tele.Bot) {
 	// Get the current time
 	currentTime := time.Now()
 
 	// Extract the month from the current time
-	currentMonth := int(currentTime.Month())
+
+	currentMonth = int(currentTime.Month())
+
 	previousMonth := currentMonth - 1
 	nextMonth := currentMonth + 1
 
@@ -27,8 +31,9 @@ func Event(b *tele.Bot) {
 		response := event.QueryEvent()
 		c.Send(content)
 		for _, record := range response.Records {
-			fmt.Println(record.Sukien)
-			c.Send(record.Event_Data)
+			if record.Month == currentMonth {
+				c.Send(record.Event_Data)
+			}
 		}
 		var currentMonthEvents = "Theo dõi các sự kiện: "
 		return c.Send(currentMonthEvents, helpers.MonthMenu_InlineKeys)
@@ -39,8 +44,9 @@ func Event(b *tele.Bot) {
 		c.Send(content)
 
 		for _, record := range response.Records {
-			fmt.Println(record.Sukien)
-			c.Send(record.Event_Data)
+			if record.Month == currentMonth {
+				c.Send(record.Event_Data)
+			}
 		}
 
 		var currentMonthEvents = "Theo dõi các sự kiện: "
@@ -49,15 +55,28 @@ func Event(b *tele.Bot) {
 
 	b.Handle(&helpers.PreviousMonth, func(c tele.Context) error {
 		response := event.QueryEvent()
-		fmt.Println(response.Records)
 		var currentMonthEvents = "Các sự kiện tháng " + strconv.Itoa(previousMonth)
-		return c.Send(currentMonthEvents)
+		c.Send(currentMonthEvents)
+
+		for _, record := range response.Records {
+			if record.Month == currentMonth-1 {
+				c.Send(record.Event_Data)
+			}
+		}
+
+		return nil
 	})
 
 	b.Handle(&helpers.NextMonth, func(c tele.Context) error {
 		response := event.QueryEvent()
-		fmt.Println(response.Records)
 		var currentMonthEvents = "Các các sự kiện tháng " + strconv.Itoa(nextMonth)
-		return c.Send(currentMonthEvents)
+
+		c.Send(currentMonthEvents)
+		for _, record := range response.Records {
+			if record.Month == currentMonth+1 {
+				c.Send(record.Event_Data)
+			}
+		}
+		return nil
 	})
 }

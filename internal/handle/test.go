@@ -7,6 +7,7 @@ import (
 
 	"github.com/yeungon/tuhuebot/internal/config"
 	"github.com/yeungon/tuhuebot/pkg/cache"
+	"github.com/yeungon/tuhuebot/pkg/reference"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -78,4 +79,17 @@ func Test(b *tele.Bot) {
 		})
 		return nil
 	})
+
+	b.Handle("/state", func(c tele.Context) error {
+		//fmt.Println(c.Message().Text)
+		hello := "Hello world"
+		reference.Test()
+
+		answerMsgText := "<b>Đang test state management</b>🍟" + hello
+		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
+			ParseMode: "HTML",
+		})
+		return nil
+	})
+
 }

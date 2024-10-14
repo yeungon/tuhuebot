@@ -9,6 +9,8 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
+var current int = 1
+
 func FetchQa(b *tele.Bot, c tele.Context) {
 	current_user := c.Sender()
 	c.Send("Các câu hỏi thường gặp")
@@ -34,6 +36,7 @@ func FetchQa(b *tele.Bot, c tele.Context) {
 }
 
 func Qa(b *tele.Bot) {
+	current = current + 1
 	b.Handle("/qa", func(c tele.Context) error {
 		FetchQa(b, c)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
@@ -43,6 +46,28 @@ func Qa(b *tele.Bot) {
 	b.Handle(&helpers.QA, func(c tele.Context) error {
 		FetchQa(b, c)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
+		return nil
+	})
+
+	b.Handle(&helpers.Back_QA, func(c tele.Context) error {
+		//FetchQa(b, c)
+		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
+		current = current - 1
+		current := strconv.Itoa(int(current))
+		c.Send(current)
+		fmt.Println(current)
+		c.Send("test back")
+		return nil
+	})
+
+	b.Handle(&helpers.Forward_QA, func(c tele.Context) error {
+		//FetchQa(b, c)
+		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
+		current = current + 1
+		current := strconv.Itoa(int(current))
+		c.Send(current)
+		fmt.Println(current)
+		c.Send("test forward")
 		return nil
 	})
 }
