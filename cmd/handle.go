@@ -18,6 +18,6 @@ func Handle(b *tele.Bot) {
 	handle.Test(b)
 	handle.Profile(b)
 	handle.Menu(b)
-	handle.RemoveCache(b)
+	handle.UpdateCache(b)
 	handle.Other(b) //Should be put at the end of the list.
 }

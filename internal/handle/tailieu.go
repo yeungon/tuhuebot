@@ -40,11 +40,11 @@ func Tailieu(b *tele.Bot) { // Define the inline button
 	})
 
 	b.Handle(&dethi, func(c tele.Context) error {
-		return c.Send("Tuyển tập các đề thi năm trước (inside handle/tailieu)!")
+		return c.Send("Nội dung này đang cập nhật")
 	})
 
 	b.Handle(&decuong, func(c tele.Context) error {
-		return c.Send("Bạn đang xem các đề thi năm trước, giúp hỗ trợ bạn ôn thi tốt hơn!")
+		return c.Send("Nội dung này đang cập nhật. ")
 	})
 
 }
