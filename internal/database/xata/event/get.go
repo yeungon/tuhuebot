@@ -8,7 +8,7 @@ import (
 
 	"github.com/allegro/bigcache/v3"
 	"github.com/xataio/xata-go/xata"
-	"github.com/yeungon/tuhuebot/internal/database"
+	database "github.com/yeungon/tuhuebot/internal/database/xata"
 )
 
 var cache *bigcache.BigCache

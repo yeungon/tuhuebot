@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/yeungon/tuhuebot/internal/database/qa"
+	"github.com/yeungon/tuhuebot/internal/database/xata/qa"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )

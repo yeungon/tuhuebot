@@ -24,7 +24,7 @@ func handleUpdate(c tele.Context) error {
 	AdminID := config.Get().AdminID
 	if current_user_id != AdminID {
 		c.Send("Sorry, bot không xử lý các thông tin người dùng gửi lên!")
-		fmt.Println("Don't handle, the current user is not admin")
+		fmt.Println("Don't handle as the current user is not admin")
 		return nil
 	}
 	// only handle if triggered/called by admin

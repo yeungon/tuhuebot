@@ -33,3 +33,5 @@ config/*
 .env
 
 .vscode
+
+tuhuebot.db

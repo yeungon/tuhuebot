@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/yeungon/tuhuebot/internal/database/event"
+	"github.com/yeungon/tuhuebot/internal/database/xata/event"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
