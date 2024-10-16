@@ -12,8 +12,8 @@ func CreateUser(db *bun.DB) {
 	// Insert new users.
 	ctx := context.Background()
 	users := []*User{
-		{Name: "Alice", Age: 30},
-		{Name: "Bob", Age: 25},
+		{FirstName: "Alice", TelegramUserID: 30},
+		{FirstName: "Bob", TelegramUserID: 25},
 	}
 	for _, user := range users {
 		_, err := db.NewInsert().Model(user).Exec(ctx)

@@ -9,6 +9,7 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	"github.com/yeungon/tuhuebot/pkg/reference"
 	tele "gopkg.in/telebot.v3"
 )
@@ -72,33 +73,12 @@ func Test(b *tele.Bot) {
 		})
 	})
 
-	b.Handle("/html", func(c tele.Context) error {
-		//fmt.Println(c.Message().Text)
-		hello := "Hello world"
-		answerMsgText := "<b>Trả lời (tham khảo)!</b>🍟" + hello
-		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
-			ParseMode: "HTML",
-		})
-		return nil
-	})
-
 	b.Handle("/state", func(c tele.Context) error {
 		//fmt.Println(c.Message().Text)
 		hello := "Hello world"
 		reference.Test()
 
 		answerMsgText := "<b>Đang test state management</b>🍟" + hello
-		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
-			ParseMode: "HTML",
-		})
-		return nil
-	})
-
-	b.Handle("/database", func(c tele.Context) error {
-		//fmt.Println(c.Message().Text)
-		hello := "Hello world"
-		//sqlite.SQLite()
-		answerMsgText := "<b>Đang test sqlite database</b>🍟" + hello
 		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
 			ParseMode: "HTML",
 		})
@@ -114,18 +94,23 @@ func Test(b *tele.Bot) {
 	})
 
 	b.Handle("/get", func(c tele.Context) error {
+		user := c.Sender()
+		helpers.PrintStruct(user)
+
 		db := sqlite.DB()
+
 		usersList := users.GetUser(db)
+		first := usersList[0]
+
+		fmt.Println(first)
+
 		// Print the retrieved users.
 		for _, user := range usersList {
-			//fmt.Printf("ID: %d, Name: %s, Age: %d\n", user.ID, user.Name, user.Age)
-
-			users := fmt.Sprintf("%d - %s - %d", user.ID, user.Name, user.Age)
-
+			users := fmt.Sprintf("%d - %s - %d", user.ID, user.FirstName, user.TelegramUserID)
 			c.Send(users)
 		}
 
-		fmt.Println("Testing bun ORM")
+		fmt.Println("Testing bun ORM - Get data from sql")
 		return nil
 	})
 
