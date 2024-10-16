@@ -17,7 +17,7 @@ func insertUser(db *sql.DB, name string, age int) error {
 }
 
 // Retrieve all users from the users table.
-func getUsers(db *sql.DB) ([]User, error) {
+func GetUsers(db *sql.DB) ([]User, error) {
 	query := `SELECT id, name, age FROM users;`
 	rows, err := db.Query(query)
 	if err != nil {
@@ -55,7 +55,7 @@ func Get(db *sql.DB) {
 	}
 
 	// Retrieve and print all users.
-	users, err := getUsers(db)
+	users, err := GetUsers(db)
 	if err != nil {
 		log.Fatal("Failed to retrieve users:", err)
 	}

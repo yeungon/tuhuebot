@@ -2,11 +2,13 @@ package handle
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"strconv"
 
 	"github.com/yeungon/tuhuebot/internal/config"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
+	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
 	"github.com/yeungon/tuhuebot/pkg/reference"
 	tele "gopkg.in/telebot.v3"
@@ -96,7 +98,19 @@ func Test(b *tele.Bot) {
 	b.Handle("/database", func(c tele.Context) error {
 		//fmt.Println(c.Message().Text)
 		hello := "Hello world"
-		sqlite.SQLite()
+		//sqlite.SQLite()
+		usersList, err := users.GetUsers(sqlite.DB())
+
+		if err != nil {
+			log.Fatal("Cannot fetch user", err)
+		}
+
+		fmt.Println(usersList)
+
+		for _, user := range usersList {
+			fmt.Printf("ID: %d, Name: %s, Age: %d\n", user.ID, user.Name, user.Age)
+			c.Send(user.Name)
+		}
 
 		answerMsgText := "<b>Đang test sqlite database</b>🍟" + hello
 		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{

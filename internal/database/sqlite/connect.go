@@ -9,9 +9,12 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+var db *sql.DB
+var err error
+
 // Initialize and open the database connection.
 func Connect() (*sql.DB, error) {
-	db, err := sql.Open("sqlite", "file:tuhuebot.db")
+	db, err = sql.Open("sqlite", "file:tuhuebot.db")
 	if err != nil {
 		return nil, err
 	}
@@ -22,5 +25,12 @@ func Connect() (*sql.DB, error) {
 		log.Fatal("Failed to create table:", err)
 	}
 	////
+
+	users.CreateTable(db)
+
 	return db, nil
+}
+
+func DB() *sql.DB {
+	return db
 }
