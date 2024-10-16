@@ -13,16 +13,16 @@ import (
 
 func Init() {
 	config.New()
-	xata.Connect()
 
-	db, err := sqlite.Connect()
-	if err != nil {
-		log.Fatal("Failed to open database:", err)
-	}
+	// =============sqlite=============
+	sqlite.BunConnect()
+	db := sqlite.DB()
+	//only close when the application close, otherwise it will not work
 	defer db.Close()
+	//==========================
 
+	xata.Connect()
 	token := config.Get().Token
-
 	Pref := tele.Settings{
 		Token:  token,
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},

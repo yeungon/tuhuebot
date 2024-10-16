@@ -2,7 +2,6 @@ package handle
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"strconv"
 
@@ -99,23 +98,34 @@ func Test(b *tele.Bot) {
 		//fmt.Println(c.Message().Text)
 		hello := "Hello world"
 		//sqlite.SQLite()
-		usersList, err := users.GetUsers(sqlite.DB())
-
-		if err != nil {
-			log.Fatal("Cannot fetch user", err)
-		}
-
-		fmt.Println(usersList)
-
-		for _, user := range usersList {
-			fmt.Printf("ID: %d, Name: %s, Age: %d\n", user.ID, user.Name, user.Age)
-			c.Send(user.Name)
-		}
-
 		answerMsgText := "<b>Đang test sqlite database</b>🍟" + hello
 		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
 			ParseMode: "HTML",
 		})
+		return nil
+	})
+
+	b.Handle("/bun", func(c tele.Context) error {
+		db := sqlite.DB()
+		users.CreateUser(db)
+
+		fmt.Println("Testing bun ORM")
+		return nil
+	})
+
+	b.Handle("/get", func(c tele.Context) error {
+		db := sqlite.DB()
+		usersList := users.GetUser(db)
+		// Print the retrieved users.
+		for _, user := range usersList {
+			//fmt.Printf("ID: %d, Name: %s, Age: %d\n", user.ID, user.Name, user.Age)
+
+			users := fmt.Sprintf("%d - %s - %d", user.ID, user.Name, user.Age)
+
+			c.Send(users)
+		}
+
+		fmt.Println("Testing bun ORM")
 		return nil
 	})
 

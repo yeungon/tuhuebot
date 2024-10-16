@@ -1,19 +1,26 @@
 package users
 
 import (
-	"database/sql"
+	"context"
+	"fmt"
+	"log"
 
-	_ "modernc.org/sqlite"
+	"github.com/uptrace/bun"
 )
 
-// Create a table using an existing database connection.
-func CreateTable(db *sql.DB) error {
-	createTableSQL := `
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        age INTEGER
-    );`
-	_, err := db.Exec(createTableSQL)
-	return err
+func CreateUser(db *bun.DB) {
+	// Insert new users.
+	ctx := context.Background()
+	users := []*User{
+		{Name: "Alice", Age: 30},
+		{Name: "Bob", Age: 25},
+	}
+	for _, user := range users {
+		_, err := db.NewInsert().Model(user).Exec(ctx)
+		if err != nil {
+			log.Fatal("Failed to insert user:", err)
+		}
+	}
+
+	fmt.Println("Create new users")
 }
