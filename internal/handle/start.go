@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/yeungon/tuhuebot/internal/database/sqlite"
+	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
@@ -26,10 +28,50 @@ func Start(b *tele.Bot) {
 
 		log.Println(user)
 
+		// ID (int64):
+		// FirstName (string): Vuong
+		// LastName (string): Nguyen
+		// IsForum (bool): false
+		// Username (string): yeungon
+		// LanguageCode (string): en
+		// IsBot (bool): false
+		// IsPremium (bool): false
+		// AddedToMenu (bool): false
+		// Usernames ([]string): []
+		// CustomEmojiStatus (string):
+		// CanJoinGroups (bool): false
+		// CanReadMessages (bool): false
+		// SupportsInline (bool): false
+
+		// Extract user details
 		firstName := user.FirstName
+		lastName := user.LastName
 		username := user.Username
+		telegramUserID := user.ID
+		isBot := user.IsBot
+
+		var lastNamePtr *string
+		if lastName != "" {
+			lastNamePtr = &lastName // Set lastName if it's not empty
+		}
+
 		name := Name(firstName, username)
 		introduction := fmt.Sprintf("%s %s. %s", intro, name, welcome)
+		// Store the user in the database, TODO: check the user if it has been stored.
+
+		db := sqlite.DB()
+		users_data := []*users.User{
+			{TelegramUserID: telegramUserID,
+				FirstName: firstName,
+				LastName:  lastNamePtr,
+				Username:  &username, // Username is also a pointer
+				IsBot:     isBot,
+			},
+		}
+
+		// Store the user in the database (consider checking if the user already exists)
+		users.CreateUser(db, users_data)
+
 		c.Send(introduction, helpers.MainMenu_InlineKeys)
 		return nil
 	})

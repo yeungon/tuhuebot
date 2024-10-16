@@ -7,7 +7,7 @@ import (
 	"github.com/uptrace/bun"
 )
 
-func GetUser(db *bun.DB) []User {
+func GetAllUser(db *bun.DB) []User {
 	var ctx = context.Background()
 	// Retrieve all users.
 	var userList []User

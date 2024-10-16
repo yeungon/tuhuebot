@@ -87,7 +87,11 @@ func Test(b *tele.Bot) {
 
 	b.Handle("/bun", func(c tele.Context) error {
 		db := sqlite.DB()
-		users.CreateUser(db)
+		users_data := []*users.User{
+			{FirstName: "Alice", TelegramUserID: 30},
+		}
+
+		users.CreateUser(db, users_data)
 
 		fmt.Println("Testing bun ORM")
 		return nil
@@ -99,7 +103,7 @@ func Test(b *tele.Bot) {
 
 		db := sqlite.DB()
 
-		usersList := users.GetUser(db)
+		usersList := users.GetAllUser(db)
 		first := usersList[0]
 
 		fmt.Println(first)
