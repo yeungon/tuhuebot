@@ -6,9 +6,11 @@ import (
 )
 
 var (
+	deparment_room     = "Một số phòng chức năng:\n\nPhòng y tế: EI5, EI6\nTổ dữ liệu: Dãy L, tầng 1\n Phòng Đào tạo và CTSV: dãy F, tầng 1\n"
+	location_coso_2    = `ơ sở 2: Đường Võ Văn Kiệt - Phường An Tây - Thành phố Huế,`
 	thesis_requirement = "https://tieuhoc.org/static/images/2024_quydinh_lam_khoaluan.png"
 	master_plan        = "https://tieuhoc.org/master/2024_2025.jpg"
-	wifi_password      = "dhsph19572010"
+	wifi_password      = "Trường: dhsph19572010. Khoa: TU16051996"
 	sotay_sinhvien_url = "https://tieuhoc.org/vanban/quydinh/SOTAYSINHVIEN_2021_tieuhoc.pdf"
 	dieukien_lam_btl   = `Điều kiện để sinh viên được làm BTL: 
 
@@ -143,7 +145,9 @@ func Info(b *tele.Bot) {
 	b.Handle(&sodotruong, func(c tele.Context) error {
 		link := "https://tieuhoc.org/map/sodo.jpg"
 		photo := &tele.Photo{File: tele.FromURL(link)}
-		return c.Send(photo)
+		c.Send(photo)
+		c.Send(deparment_room)
+		return nil
 	})
 
 	b.Handle(&sotay_sinhvien, func(c tele.Context) error {
