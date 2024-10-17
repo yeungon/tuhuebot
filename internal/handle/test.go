@@ -5,7 +5,6 @@ import (
 	"math/rand"
 	"strconv"
 
-	"github.com/yeungon/tuhuebot/internal/config"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
@@ -54,16 +53,13 @@ func Test(b *tele.Bot) {
 
 	// Handle start command
 	b.Handle("/test", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+
 		// test cache
 		cache.TestCache()
 
-		admin_id := config.Get().AdminID
-		current_user := c.Sender()
-		current_user_id := strconv.Itoa(int(current_user.ID))
-		// only handle if the current user is the admin
-		if admin_id != current_user_id {
-			return nil
-		}
 		// Create a reply with the inline button
 		inlineKeys := [][]tele.InlineButton{
 			{inlineBtn},
@@ -74,6 +70,9 @@ func Test(b *tele.Bot) {
 	})
 
 	b.Handle("/state", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
 		//fmt.Println(c.Message().Text)
 		hello := "Hello world"
 		reference.Test()
@@ -86,6 +85,9 @@ func Test(b *tele.Bot) {
 	})
 
 	b.Handle("/bun", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
 		db := sqlite.DB()
 		users_data := []*users.User{
 			{FirstName: "Alice", TelegramUserID: 30},
@@ -98,11 +100,13 @@ func Test(b *tele.Bot) {
 	})
 
 	b.Handle("/get", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
 		user := c.Sender()
 		helpers.PrintStruct(user)
 
 		db := sqlite.DB()
-
 		usersList := users.GetAllUser(db)
 		first := usersList[0]
 

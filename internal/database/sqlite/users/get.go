@@ -21,3 +21,12 @@ func GetAllUser(db *bun.DB) []User {
 
 	return userList
 }
+
+func GetTotalUser(db *bun.DB) int {
+	var ctx = context.Background()	
+	count, err := db.NewSelect().Model((*User)(nil)).Count(ctx)
+	if err != nil {
+		log.Fatal("Failed to retrieve total users:", err)
+	}
+	return count
+}

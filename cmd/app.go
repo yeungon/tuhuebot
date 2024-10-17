@@ -17,9 +17,9 @@ func Init() {
 	// =============sqlite=============
 	sqlite.BunConnect()
 	db := sqlite.DB()
-	//only close when the application close, otherwise it will not work
+	//only closes when the application closes, otherwise it will not work.
 	defer db.Close()
-	//==========================
+	//=================================
 
 	xata.Connect()
 	token := config.Get().Token
