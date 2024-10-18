@@ -8,7 +8,7 @@ import (
 func Handle(b *tele.Bot) {
 	handle.About(b)
 	handle.Qa(b)
-	handle.Guide(b)
+	handle.Assistant(b)
 	handle.Info(b)
 	handle.Start(b)
 	handle.Tailieu(b)
@@ -20,5 +20,6 @@ func Handle(b *tele.Bot) {
 	handle.Menu(b)
 	handle.UpdateCache(b)
 	handle.Status(b)
+	handle.ReceiveQuestion(b)
 	handle.Other(b) //Should be put at the end of the list.
 }

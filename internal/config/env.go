@@ -13,6 +13,7 @@ type Env struct {
 	AdminID       string
 	XATA_API_KEY  string
 	XATA_BASE_URL string
+	PASSCODE      string
 }
 
 var once sync.Once
@@ -29,12 +30,14 @@ func New() {
 		admin_id := os.Getenv("ADMIN_ID")
 		xata_api_key := os.Getenv("XATA_API_KEY")
 		xata_base_url := os.Getenv("XATA_BASE_URL")
+		pass_code := os.Getenv("PASSCODE")
 
 		env = &Env{
 			Token:         token,
 			AdminID:       admin_id,
 			XATA_API_KEY:  xata_api_key,
 			XATA_BASE_URL: xata_base_url,
+			PASSCODE:      pass_code,
 		}
 
 	})

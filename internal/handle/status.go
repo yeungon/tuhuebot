@@ -11,6 +11,7 @@ import (
 
 func FetchStatus(c tele.Context) {
 	if helpers.IsAdmin(c) == false {
+		c.Send("Bot không xử lý command bạn vừa gửi lên!")
 		return
 	}
 	db := sqlite.DB()

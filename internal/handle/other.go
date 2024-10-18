@@ -6,14 +6,17 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
+var x = 0
+
 func Other(b *tele.Bot) {
 	b.Handle(tele.OnText, func(c tele.Context) error {
 		// All the text messages that weren't
 		// captured by existing handlers.
+		x++
 		text := c.Text()
 		user := c.Sender()
 		fmt.Println(user)
-		fmt.Println(text)
+		fmt.Printf("Inside Other %s - %d: ", text, x)
 		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")
 	})
 

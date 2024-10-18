@@ -17,9 +17,9 @@ var QA = tele.InlineButton{
 	Data:   "button2_clicked",
 }
 
-var Guide = tele.InlineButton{
+var Assistant = tele.InlineButton{
 	Unique: "btn_callback3_guide",
-	Text:   "Hướng dẫn",
+	Text:   "Trợ lý",
 	Data:   "button3_clicked",
 }
 
@@ -45,7 +45,7 @@ var Event = tele.InlineButton{
 var MainMenu_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
 		{Intro, Event},
-		{QA, Guide},
-		{Materials, Info}, // Row 4: Button 4
+		{QA, Info},
+		{Materials, Assistant}, // Row 4: Button 4
 	},
 }
