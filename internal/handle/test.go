@@ -99,6 +99,24 @@ func Test(b *tele.Bot) {
 		return nil
 	})
 
+	b.Handle("/user", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+		user := c.Sender().ID
+		db := sqlite.DB()
+		current_user := users.GetCurrentUser(db, user)
+
+		users.SetUserState(db, user, false)
+
+		state := users.UserState(db, user)
+
+		info := fmt.Sprintf("%v - %s - trạng thái mở hay đóng %v", *current_user.Username, current_user.FirstName, state)
+		c.Send(info)
+		c.Send("Hello, testing user")
+		return nil
+	})
+
 	b.Handle("/get", func(c tele.Context) error {
 		if helpers.IsAdmin(c) == false {
 			return nil

@@ -1,5 +1,5 @@
 run: build
-	@ ./bin/tuhuebot start
+	@ ./bin/tuhuebot
 build:
 	@go build -o bin/tuhuebot -buildvcs=false
 dev:
