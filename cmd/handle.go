@@ -21,5 +21,5 @@ func Handle(b *tele.Bot) {
 	handle.UpdateCache(b)
 	handle.Status(b)
 	handle.ReceiveQuestion(b)
-	handle.Other(b) //Should be put at the end of the list.
+	handle.Passcode(b) //Should be put at the end of the list.
 }

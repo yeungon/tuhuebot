@@ -2,7 +2,6 @@ package handle
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
@@ -25,23 +24,6 @@ func Start(b *tele.Bot) {
 			intro   = "Welcome onboard"
 			welcome = "Chào mừng bạn đến với bot hỗ trợ học tập tự động. Chúc bạn một ngày tốt lành.\n\nDưới đây là các chức năng, thông tin chính hiện có của bot:"
 		)
-
-		log.Println(user)
-
-		// ID (int64):
-		// FirstName (string): Vuong
-		// LastName (string): Nguyen
-		// IsForum (bool): false
-		// Username (string): yeungon
-		// LanguageCode (string): en
-		// IsBot (bool): false
-		// IsPremium (bool): false
-		// AddedToMenu (bool): false
-		// Usernames ([]string): []
-		// CustomEmojiStatus (string):
-		// CanJoinGroups (bool): false
-		// CanReadMessages (bool): false
-		// SupportsInline (bool): false
 
 		// Extract user details
 		firstName := user.FirstName
