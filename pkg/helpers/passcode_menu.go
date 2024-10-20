@@ -7,14 +7,14 @@ import (
 // Define five inline buttons
 var Back_To_Main_Menu = tele.InlineButton{
 	Unique: "btn_callback1_main_menu",
-	Text:   "Menu chính ⏪",
+	Text:   "Menu chính ✅",
 	Data:   "button1_clicked",
 }
 
 // Define five inline buttons
 var Keep_Typing_Passcode = tele.InlineButton{
-	Unique: "btn_callback1_qa_forward",
-	Text:   "⏩ Nhập mật khẩu",
+	Unique: "btn_callback1_retry_password",
+	Text:   "🔐 Nhập mật khẩu",
 	Data:   "button1_clicked",
 }
 

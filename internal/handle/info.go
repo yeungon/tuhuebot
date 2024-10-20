@@ -17,7 +17,7 @@ var (
 1. SV được đăng ký thực hiện BTL sau khi đã tích luỹ tối thiểu 15 tín chỉ (TC), có điểm TBC tích lũy đạt từ 2,4 trở lên. SV thực hiện BTL phải tham gia học tập
 chuyên cần và thực hiện các yêu cầu học tập của GV.
 2. Được GV phụ trách học phần đề nghị và Tổ trưởng chuyên môn quản lí học phần duyệt.
-3. Trong mỗi học kì, một SV chỉ được phép thực hiện tối đa 02 BTL.
+3. Trong mỗi học kì, một SV chỉ được phép ực hiện tối đa 02 BTL.
 
 Điều kiện để giảng viên hướng dẫn BTL
 1. Để được tham gia hướng dẫn BTL, GV đã giảng dạy đại học từ 1 năm trở lên. GV dạy học phần nào, thì hướng dẫn và chấm BTL của học phần đó.

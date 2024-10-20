@@ -1,6 +1,8 @@
 package handle
 
 import (
+	"fmt"
+
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
@@ -13,7 +15,8 @@ func HandleAssistant(c tele.Context) error {
 	current_user := users.GetCurrentUser(db, user)
 
 	if current_user.Level > 1 {
-		c.Send("Xin chào bạn, dữ liệu đã sẵn sàng")
+		message := fmt.Sprintf("Xin chào %v, dữ liệu đã sẵn sàng. Trang này đang được cập nhật!", *current_user.Username)
+		c.Send(message)
 		return nil
 	}
 

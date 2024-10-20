@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strconv"
 
+	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
@@ -121,19 +122,21 @@ func Test(b *tele.Bot) {
 		if helpers.IsAdmin(c) == false {
 			return nil
 		}
-		user := c.Sender()
-		helpers.PrintStruct(user)
+		//user := c.Sender()
+		// helpers.PrintStruct(user)
+		pgdata := pg.PG()
+		events := pg.GetEvent(pgdata)
 
-		db := sqlite.DB()
-		usersList := users.GetAllUser(db)
-		first := usersList[0]
+		// db := sqlite.DB()
+		// usersList := users.GetAllUser(db)
+		// first := usersList[0]
 
-		fmt.Println(first)
+		// fmt.Println(first)
 
-		// Print the retrieved users.
-		for _, user := range usersList {
-			users := fmt.Sprintf("%d - %s - %d", user.ID, user.FirstName, user.TelegramUserID)
-			c.Send(users)
+		// // Print the retrieved users.
+		for _, event := range events {
+			event := fmt.Sprintf("%d - %s ", event.Month, event.EventData)
+			c.Send(event)
 		}
 
 		fmt.Println("Testing bun ORM - Get data from sql")

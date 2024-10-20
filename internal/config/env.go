@@ -14,6 +14,7 @@ type Env struct {
 	XATA_API_KEY  string
 	XATA_BASE_URL string
 	PASSCODE      string
+	PG            string
 }
 
 var once sync.Once
@@ -31,6 +32,7 @@ func New() {
 		xata_api_key := os.Getenv("XATA_API_KEY")
 		xata_base_url := os.Getenv("XATA_BASE_URL")
 		pass_code := os.Getenv("PASSCODE")
+		postgresq := os.Getenv("PG")
 
 		env = &Env{
 			Token:         token,
@@ -38,6 +40,7 @@ func New() {
 			XATA_API_KEY:  xata_api_key,
 			XATA_BASE_URL: xata_base_url,
 			PASSCODE:      pass_code,
+			PG:            postgresq,
 		}
 
 	})

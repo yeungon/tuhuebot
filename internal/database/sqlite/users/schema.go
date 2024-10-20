@@ -15,8 +15,12 @@ type User struct {
 	ID                      int64               `bun:",pk,autoincrement"`                  // Primary key with auto-increment.
 	TelegramUserID          int64               `bun:",notnull,unique"`                    // Telegram user ID.
 	IsBot                   bool                `bun:",notnull"`                           // Indicates if this user is a bot.
-	Level                   int64               `bun:",notnull,default:1"`                 // Indicates if this user is a bot.
-	State                   bool                `bun:",notnull,default:false"`             // Indicates if this user is a bot.
+	Level                   int64               `bun:",notnull,default:1"`                 //
+	State                   bool                `bun:",notnull,default:false"`             //
+	StateAsking             bool                `bun:",notnull,default:false"`             // If receive the question
+	StateBlocking           bool                `bun:",notnull,default:false"`             // If receive the question
+	AttemptCounting         int64               `bun:",nullzero,default:0"`                // How many time the user type the password
+	QuestionAnswerTracking  int64               `bun:",nullzero,default:0"`                // How many time the user type the password
 	FirstName               string              `bun:",notnull"`                           // User's or bot's first name.
 	LastName                *string             `bun:",nullzero"`                          // Optional. User's or bot's last name.
 	Username                *string             `bun:",nullzero,unique"`                   // Optional. User's or bot's username.

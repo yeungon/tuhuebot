@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/yeungon/tuhuebot/internal/database/sqlite"
+	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/internal/database/xata/qa"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
@@ -18,7 +20,6 @@ func FetchQa(b *tele.Bot, c tele.Context) {
 
 	for index, record := range response.Records {
 		//fmt.Printf("ID: %s\n", record.ID)
-		fmt.Println("Published:", record.Published)
 		if record.Published == true {
 			index_string := strconv.Itoa(index + 1)
 			questionMsg := "🌓 🅀🅄🄴🅂🅃🄸🄾🄽 <i>" + index_string + ": " + record.Question + "</i>"
@@ -48,7 +49,11 @@ func Qa(b *tele.Bot) {
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
+	ControlQuestion(b)
+	PostQuestion(b)
+}
 
+func ControlQuestion(b *tele.Bot) {
 	b.Handle(&helpers.Back_QA, func(c tele.Context) error {
 		//FetchQa(b, c)
 		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
@@ -68,6 +73,20 @@ func Qa(b *tele.Bot) {
 		c.Send(current)
 		fmt.Println(current)
 		c.Send("test forward")
+		return nil
+	})
+}
+
+func PostQuestion(b *tele.Bot) {
+	b.Handle(&helpers.Post_QA, func(c tele.Context) error {
+		c.Send(current)
+		user_id := c.Sender().ID
+		user := c.Sender().ID
+		db := sqlite.DB()
+		users.SetUserStateAsking(db, user_id, true)
+		current_user_asking := users.UserStateAsking(db, user)
+		fmt.Println(current_user_asking)
+		c.Send("Đang xây dựng tính năng này!")
 		return nil
 	})
 }
