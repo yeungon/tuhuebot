@@ -5,6 +5,6 @@ Type=simple
 Restart=always
 RestartSec=5s
 WorkingDirectory=/www/wwwroot/tuhue.bot/tuhuebot
-ExecStart=/www/wwwroot/tuhue.bot/tuhuebot/bin/tuhuebot start
+ExecStart=/www/wwwroot/tuhue.bot/tuhuebot/bin/tuhuebot
 [Install]
 WantedBy=multi-user.target

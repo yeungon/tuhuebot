@@ -12,5 +12,6 @@ restart:
 	sudo systemctl restart tuhuebot
 status:
 	sudo systemctl status tuhuebot
+#Print out the log after running with systemd
 log:
 	journalctl -u tuhuebot -f

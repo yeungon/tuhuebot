@@ -10,7 +10,6 @@ require (
 	github.com/uptrace/bun/dialect/sqlitedialect v1.2.3
 	github.com/uptrace/bun/driver/pgdriver v1.2.3
 	github.com/uptrace/bun/driver/sqliteshim v1.2.3
-	github.com/xataio/xata-go v0.0.7
 	gopkg.in/telebot.v3 v3.3.8
 )
 
