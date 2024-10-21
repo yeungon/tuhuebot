@@ -2,9 +2,9 @@ package handle
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
@@ -126,11 +126,18 @@ func Test(b *tele.Bot) {
 		//user := c.Sender()
 		// helpers.PrintStruct(user)
 		pgdata := pg.PG()
-		events := pg.GetEvent(pgdata)
+		// events := pg.GetEvent(pgdata)
 
-		question_answer := pg.GetQuestionAnswer(pgdata)
+		newQA := &pg.QA{
+			UserAsked:     "1",         // Example user ID
+			UserAnswered:  "some_user", // Example answerer
+			Question:      "hello What is the capital of France?",
+			Published:     false, // Default to false
+			XataCreatedat: time.Now(),
+			XataUpdatedat: time.Now(),
+		}
 
-		log.Println(question_answer)
+		pg.CreateQA(pgdata, newQA)
 
 		// db := sqlite.DB()
 		// usersList := users.GetAllUser(db)
@@ -139,10 +146,10 @@ func Test(b *tele.Bot) {
 		// fmt.Println(first)
 
 		// // Print the retrieved users.
-		for _, event := range events {
-			event := fmt.Sprintf("%d - %s ", event.Month, event.EventData)
-			c.Send(event)
-		}
+		// for _, event := range events {
+		// 	event := fmt.Sprintf("%d - %s ", event.Month, event.EventData)
+		// 	c.Send(event)
+		// }
 
 		fmt.Println("Testing bun ORM - Get data from sql")
 		return nil

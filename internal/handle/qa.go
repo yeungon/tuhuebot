@@ -26,7 +26,7 @@ func FetchQAPG(b *tele.Bot, c tele.Context) {
 				ParseMode: "HTML",
 			})
 			// answerMsgTexta := "<b>✅ 🄰🄽🅂🅆🄴🅁: </b>" + record.Answer
-			answerMsgTexta := "<b>✅ </b>" + record.Answer
+			answerMsgTexta := "<b>✅ </b>" + *record.Answer
 			b.Send(current_user, answerMsgTexta, &tele.SendOptions{
 				ParseMode: "HTML",
 			})
@@ -84,7 +84,7 @@ func PostQuestion(b *tele.Bot) {
 		users.SetUserStateAsking(db, user_id, true)
 		current_user_asking := users.UserStateAsking(db, user)
 		fmt.Println(current_user_asking)
-		c.Send("Đang xây dựng tính năng này!")
+		c.Send("Bot đã bật chế độ nhận câu hỏi. Xin đặt câu hỏi! 🔓")
 		return nil
 	})
 }

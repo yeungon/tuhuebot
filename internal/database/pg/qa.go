@@ -15,7 +15,7 @@ func GetQuestionAnswer(db *bun.DB) []QA {
 	cacheKey := "qa_data"
 
 	// Check if data is in the cache
-	cachedData, err := cache.Get(cacheKey)
+	cachedData, err := Cache.Get(cacheKey)
 	if err == nil {
 		// Cache hit - unmarshal and return cached data
 		var cachedQAs []QA
@@ -46,7 +46,7 @@ func GetQuestionAnswer(db *bun.DB) []QA {
 	if err != nil {
 		log.Printf("Failed to marshal question_answer data: %v", err)
 	} else {
-		err = cache.Set(cacheKey, data)
+		err = Cache.Set(cacheKey, data)
 		if err != nil {
 			log.Printf("Failed to cache the result: %v", err)
 		}
@@ -54,4 +54,14 @@ func GetQuestionAnswer(db *bun.DB) []QA {
 
 	fmt.Println("Succeeded fetching data from qa table stored at XATA.io")
 	return question_answer
+}
+
+func CreateQA(db *bun.DB, newQA *QA) {
+	ctx := context.Background()
+	_, err := db.NewInsert().Model(newQA).Exec(ctx)
+	if err != nil {
+		log.Fatalf("Failed to insert new question: %v", err)
+	}
+
+	fmt.Println("New question inserted successfully!")
 }

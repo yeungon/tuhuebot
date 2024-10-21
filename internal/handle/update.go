@@ -5,6 +5,8 @@ import (
 	"strconv"
 
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/internal/database/pg"
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -29,6 +31,8 @@ func handleUpdate(c tele.Context) error {
 	}
 	// only handle if triggered/called by admin
 	fmt.Println(current_user_id)
+	helpers.DeleteCache(pg.Cache, "events_data")
+	helpers.DeleteCache(pg.Cache, "qa_data")
 	content := "Cache từ bigCache đã được xóa!"
 	return c.Send(content)
 }

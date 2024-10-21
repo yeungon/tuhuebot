@@ -15,7 +15,7 @@ func GetEvent(db *bun.DB) []Events {
 	cacheKey := "events_data"
 
 	// Check if data is in the cache
-	cachedData, err := cache.Get(cacheKey)
+	cachedData, err := Cache.Get(cacheKey)
 	if err == nil {
 		// Cache hit - unmarshal and return cached data
 		var cachedEvents []Events
@@ -46,7 +46,7 @@ func GetEvent(db *bun.DB) []Events {
 	if err != nil {
 		log.Printf("Failed to marshal event data: %v", err)
 	} else {
-		err = cache.Set(cacheKey, data)
+		err = Cache.Set(cacheKey, data)
 		if err != nil {
 			log.Printf("Failed to cache the result: %v", err)
 		}

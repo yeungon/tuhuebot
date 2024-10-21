@@ -2,9 +2,12 @@ package handle
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
@@ -51,11 +54,27 @@ func Passcode(b *tele.Bot) {
 		}
 
 		if current_user.StateAsking == true {
+			user_asked := strconv.FormatInt(c.Sender().ID, 10)
+			fmt.Println(user_asked)
 			user_input := strings.TrimSpace(c.Text())
+
+			// Store the question into the database at XATA
+			pgdata := pg.PG()
+
+			var answer string = "" // No answer provided
+			newQA := &pg.QA{
+				UserAsked:     user_asked, // Example user ID
+				Question:      user_input,
+				Answer:        &answer,
+				XataCreatedat: time.Now(),
+				XataUpdatedat: time.Now(),
+			}
+			pg.CreateQA(pgdata, newQA)
+			//Close the asking question state_asking
 			users.SetUserStateAsking(db, user, false)
-			c.Send("Bot đã nhận được câu hỏi của bạn! Bot sẽ cập nhật dữ liệu khi có được câu trả lời của thầy cô, bộ phận chuyên môn!\n")
-			//TODO: Save to xata
-			fmt.Println(user_input)
+
+			c.Send("Cảm ơn bạn đã đặt câu hỏi 🤗💯. Bot sẽ cập nhật dữ liệu khi có câu trả lời.\nTruy cập /qa để theo dõi!\n")
+			c.Send("Chế độ nhận câu hỏi đã đóng!🔒")
 			return nil
 		}
 
