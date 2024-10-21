@@ -3,6 +3,7 @@ package pg
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -11,20 +12,46 @@ import (
 
 func GetEvent(db *bun.DB) []Events {
 	var ctx = context.Background()
-	// Retrieve all users.
+	cacheKey := "events_data"
+
+	// Check if data is in the cache
+	cachedData, err := cache.Get(cacheKey)
+	if err == nil {
+		// Cache hit - unmarshal and return cached data
+		var cachedEvents []Events
+		err = json.Unmarshal(cachedData, &cachedEvents)
+		if err == nil {
+			fmt.Println("Returning data from cache")
+			return cachedEvents
+		}
+	}
+
+	// Cache miss - query the database
 	var event []Events
-	err := db.NewSelect().
+	err = db.NewSelect().
 		Model(&event).
 		Order("month ASC").
 		Scan(ctx)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("No user found with the provided Telegram ID.")
-			return []Events{} // Return a zero-value User if no user is found.
+			fmt.Println("No events found.")
+			return []Events{} // Return a zero-value slice if no events are found.
 		}
 
-		log.Fatal("Failed to retrieve users:", err)
+		log.Fatal("Failed to retrieve events:", err)
 	}
-	fmt.Println("Fetching event ok")
+
+	// Store the fetched data in the cache
+	data, err := json.Marshal(event)
+	if err != nil {
+		log.Printf("Failed to marshal event data: %v", err)
+	} else {
+		err = cache.Set(cacheKey, data)
+		if err != nil {
+			log.Printf("Failed to cache the result: %v", err)
+		}
+	}
+
+	fmt.Println("Succeeded fetching data from events table stored at XATA.io")
 	return event
 }

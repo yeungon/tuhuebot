@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"strconv"
 
@@ -126,6 +127,10 @@ func Test(b *tele.Bot) {
 		// helpers.PrintStruct(user)
 		pgdata := pg.PG()
 		events := pg.GetEvent(pgdata)
+
+		question_answer := pg.GetQuestionAnswer(pgdata)
+
+		log.Println(question_answer)
 
 		// db := sqlite.DB()
 		// usersList := users.GetAllUser(db)

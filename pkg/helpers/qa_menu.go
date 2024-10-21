@@ -7,7 +7,7 @@ import (
 // Define five inline buttons
 var Back_QA = tele.InlineButton{
 	Unique: "btn_callback1_qa_back",
-	Text:   "Câu hỏi trước ⏪",
+	Text:   "Trước ⏪",
 	Data:   "button1_clicked",
 }
 
@@ -21,7 +21,7 @@ var Post_QA = tele.InlineButton{
 // Define five inline buttons
 var Forward_QA = tele.InlineButton{
 	Unique: "btn_callback1_qa_forward",
-	Text:   "⏩ Câu hỏi kế",
+	Text:   "⏩ Kế tiếp",
 	Data:   "button1_clicked",
 }
 
