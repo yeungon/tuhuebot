@@ -12,7 +12,6 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
-	logging "github.com/yeungon/tuhuebot/pkg/log"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -167,16 +166,6 @@ func Test(b *tele.Bot) {
 		slog.Error("Failed to connect to database", "module", "db", "error", "connection timeout")
 
 		fmt.Println("Testing log")
-		return nil
-	})
-
-	b.Handle("/seelog", func(c tele.Context) error {
-		if helpers.IsAdmin(c) == false {
-			return nil
-		}
-		file_location := "tuhuebot.json"
-		logging.Show(c, file_location)
-		fmt.Println("Reading log file")
 		return nil
 	})
 

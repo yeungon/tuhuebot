@@ -31,7 +31,7 @@ func getName(c tele.Context) string {
 	return c.Sender().Username
 }
 
-func Passcode(b *tele.Bot) {
+func Submit(b *tele.Bot) {
 	b.Handle(tele.OnText, func(c tele.Context) error {
 		user := c.Sender().ID
 		db := sqlite.DB()
