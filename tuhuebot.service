@@ -8,3 +8,6 @@ WorkingDirectory=/www/wwwroot/tuhue.bot/tuhuebot
 ExecStart=/www/wwwroot/tuhue.bot/tuhuebot/bin/tuhuebot
 [Install]
 WantedBy=multi-user.target
+#Using Golang log instead of systemd
+#StandardOutput=append:/var/log/tuhuebot.log
+#StandardError=append:/var/log/tuhuebot-error.log

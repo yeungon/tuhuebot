@@ -8,10 +8,13 @@ import (
 	"github.com/yeungon/tuhuebot/internal/config"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
+	logging "github.com/yeungon/tuhuebot/pkg/log"
 	tele "gopkg.in/telebot.v3"
 )
 
 func Init() {
+	logging.Log()
+
 	config.New()
 	// =============sqlite=============
 	sqlite.BunConnect()
@@ -36,5 +39,8 @@ func Init() {
 	}
 	fmt.Println("Hi, your bot is running as expected!")
 	Handle(b)
+
+	// When shutting down the application, ensure the log is closed properly
+	defer logging.CloseLog()
 	b.Start()
 }

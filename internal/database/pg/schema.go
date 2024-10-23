@@ -10,7 +10,10 @@ import (
 type Events struct {
 	bun.BaseModel `bun:"table:events"` // Specifies the table name for the Bun ORM.
 	XataID        string               `bun:",notnull,unique"`                    // Primary key with auto-increment.
-	EventData     string               `bun:",nullzero"`                          // Indicates if this user is a bot.
+	EventData     string               `bun:",nullzero"`                          //
+	EventTasks    string               `bun:",nullzero"`                          //
+	EventTracking int64                `bun:",nullzero"`                          //
+	EventState    bool                 `bun:",nullzero,default:false"`            //
 	Month         int64                `bun:",nullzero"`                          //
 	XataCreatedat time.Time            `bun:",notnull,default:current_timestamp"` // Created at timestamp
 	XataUpdatedat time.Time            `bun:",notnull,default:current_timestamp"` // Updated at timestamp

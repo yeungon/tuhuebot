@@ -15,8 +15,9 @@ func HandleAssistant(c tele.Context) error {
 	current_user := users.GetCurrentUser(db, user)
 
 	if current_user.Level > 1 {
-		message := fmt.Sprintf("Xin chào %v, dữ liệu đã sẵn sàng. Trang này đang được cập nhật!", *current_user.Username)
-		c.Send(message)
+		message := fmt.Sprintf("Xin chào %v, các tùy chọn nghiệp vụ:", *current_user.Username)
+		c.Send(message, helpers.Assitant_InlineKeys)
+
 		return nil
 	}
 

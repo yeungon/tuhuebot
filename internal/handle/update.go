@@ -29,6 +29,7 @@ func handleUpdate(c tele.Context) error {
 		fmt.Println("Don't handle as the current user is not admin")
 		return nil
 	}
+
 	// only handle if triggered/called by admin
 	fmt.Println(current_user_id)
 	helpers.DeleteCache(pg.Cache, "events_data")

@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"log/slog"
 	"math/rand"
 	"strconv"
 	"time"
@@ -11,7 +12,7 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
-	"github.com/yeungon/tuhuebot/pkg/reference"
+	logging "github.com/yeungon/tuhuebot/pkg/log"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -77,7 +78,6 @@ func Test(b *tele.Bot) {
 		}
 		//fmt.Println(c.Message().Text)
 		hello := "Hello world"
-		reference.Test()
 
 		answerMsgText := "<b>Đang test state management</b>🍟" + hello
 		b.Send(c.Sender(), answerMsgText, &tele.SendOptions{
@@ -152,6 +152,31 @@ func Test(b *tele.Bot) {
 		// }
 
 		fmt.Println("Testing bun ORM - Get data from sql")
+		return nil
+	})
+
+	b.Handle("/log", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+
+		// Log some messages with structured data
+		slog.Debug("This is a debug message", "module", "auth", "status", "success")
+		slog.Info("User logged in", "user", "john_doe", "module", "auth")
+		slog.Warn("Disk space is running low", "module", "storage", "free_space", "5GB")
+		slog.Error("Failed to connect to database", "module", "db", "error", "connection timeout")
+
+		fmt.Println("Testing log")
+		return nil
+	})
+
+	b.Handle("/seelog", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+		file_location := "tuhuebot.json"
+		logging.Show(c, file_location)
+		fmt.Println("Reading log file")
 		return nil
 	})
 

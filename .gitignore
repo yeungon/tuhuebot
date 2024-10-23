@@ -34,4 +34,8 @@ config/*
 
 .vscode
 
+#sqlite database
 tuhuebot.db
+
+# log file
+tuhuebot.json
