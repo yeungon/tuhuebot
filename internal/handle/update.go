@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"log/slog"
 	"strconv"
 
 	"github.com/yeungon/tuhuebot/internal/config"
@@ -35,6 +36,7 @@ func handleUpdate(c tele.Context) error {
 	helpers.DeleteCache(pg.Cache, "events_data")
 	helpers.DeleteCache(pg.Cache, "qa_data")
 	helpers.DeleteCache(pg.Cache, "timetable_data")
+	slog.Info("Remove the cache", "user", "admin", "module", "auth")
 	content := "Cache từ bigCache đã được xóa!"
 	return c.Send(content)
 }

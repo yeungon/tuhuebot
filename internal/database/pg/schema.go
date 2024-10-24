@@ -44,6 +44,7 @@ type TimeTable struct {
 	Friday        string                  `bun:",nullzero"`                          //
 	Saturday      string                  `bun:",nullzero"`                          //
 	Sunday        string                  `bun:",nullzero"`                          //
+	Notes         string                  `bun:",nullzero"`                          //
 	XataCreatedat time.Time               `bun:",notnull,default:current_timestamp"` // Created at timestamp
 	XataUpdatedat time.Time               `bun:",notnull,default:current_timestamp"` // Updated at timestamp
 }

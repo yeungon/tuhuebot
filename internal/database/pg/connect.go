@@ -2,7 +2,6 @@ package pg
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -16,7 +15,6 @@ func Connect() {
 	var pg_url = config.Get().PG
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(pg_url)))
 	dbpg = bun.NewDB(sqldb, pgdialect.New())
-	fmt.Println(dbpg)
 }
 
 func PG() *bun.DB {
