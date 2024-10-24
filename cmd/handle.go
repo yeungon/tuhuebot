@@ -19,6 +19,7 @@ func Handle(b *tele.Bot) {
 	handle.Profile(b)
 	handle.Menu(b)
 	handle.UpdateCache(b)
+	handle.TimeTable(b)
 	handle.Status(b)
 	handle.Log(b)
 	handle.Submit(b) //Should be put at the end of the list.

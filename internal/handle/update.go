@@ -34,6 +34,7 @@ func handleUpdate(c tele.Context) error {
 	fmt.Println(current_user_id)
 	helpers.DeleteCache(pg.Cache, "events_data")
 	helpers.DeleteCache(pg.Cache, "qa_data")
+	helpers.DeleteCache(pg.Cache, "timetable_data")
 	content := "Cache từ bigCache đã được xóa!"
 	return c.Send(content)
 }

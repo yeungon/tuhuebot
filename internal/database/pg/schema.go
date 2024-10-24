@@ -30,3 +30,20 @@ type QA struct {
 	XataCreatedat time.Time        `bun:",notnull,default:current_timestamp"` // Created at timestamp
 	XataUpdatedat time.Time        `bun:",notnull,default:current_timestamp"` // Updated at timestamp
 }
+
+type TimeTable struct {
+	bun.BaseModel `bun:"table:timetable"` // Specifies the table name for the Bun ORM.
+	XataID        string                  `bun:",notnull,unique"`                    // Primary key with auto-increment.
+	LecturerName  string                  `bun:",nullzero"`                          //
+	Year          int                     `bun:",nullzero"`                          //
+	Semester      int                     `bun:",notnull,default:1"`                 //
+	Monday        string                  `bun:",nullzero"`                          //
+	Tuesday       string                  `bun:",nullzero"`                          //
+	Wednesday     string                  `bun:",nullzero"`                          //
+	Thursday      string                  `bun:",nullzero"`                          //
+	Friday        string                  `bun:",nullzero"`                          //
+	Saturday      string                  `bun:",nullzero"`                          //
+	Sunday        string                  `bun:",nullzero"`                          //
+	XataCreatedat time.Time               `bun:",notnull,default:current_timestamp"` // Created at timestamp
+	XataUpdatedat time.Time               `bun:",notnull,default:current_timestamp"` // Updated at timestamp
+}
