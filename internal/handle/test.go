@@ -168,5 +168,24 @@ func Test(b *tele.Bot) {
 		fmt.Println("Testing log")
 		return nil
 	})
+	b.Handle("/time", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+
+		timeLoc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+		today := time.Now().In(timeLoc)
+		fmt.Println("Asia/Ho_Chi_Minh:", today)
+
+		loc, _ := time.LoadLocation("America/New_York")
+		now := time.Now().In(loc)
+		fmt.Println("New York time:", now)
+
+		server := time.Now()
+		fmt.Println("Server time:", server)
+
+		return nil
+
+	})
 
 }

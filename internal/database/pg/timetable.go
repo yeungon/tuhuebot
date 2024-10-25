@@ -75,7 +75,6 @@ func GetTimeTableByDay(db *bun.DB, dayColumn string) []TimeTable {
 	var timeTable []TimeTable
 	err = db.NewSelect().
 		Model(&timeTable).
-		Column(dayColumn).
 		Where(fmt.Sprintf("%s IS NOT NULL AND %s != ''", dayColumn, dayColumn)).
 		Scan(ctx)
 	if err != nil {
@@ -87,17 +86,7 @@ func GetTimeTableByDay(db *bun.DB, dayColumn string) []TimeTable {
 		log.Fatal("Failed to retrieve timetable:", err)
 	}
 
-	// Store the fetched data in the cache
-	data, err := json.Marshal(timeTable)
-	if err != nil {
-		log.Printf("Failed to marshal timetable data: %v", err)
-	} else {
-		err = Cache.Set(cacheKey, data)
-		if err != nil {
-			log.Printf("Failed to cache the result: %v", err)
-		}
-	}
-
+	// Dont store in the cache because the data is not full.
 	fmt.Println("Succeeded fetching data from time_table table stored at XATA.io")
 	return timeTable
 }

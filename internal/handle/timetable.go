@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/yeungon/tuhuebot/internal/database/pg"
@@ -48,19 +49,73 @@ func TimeTable(b *tele.Bot) {
 		}
 		return nil
 	})
+
 	b.Handle(&helpers.LecturerTimeTable_Date, func(c tele.Context) error {
 		day_vietnamese := []string{"Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"}
-		today := time.Now()
+		timeLoc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+		today := time.Now().In(timeLoc)
+
 		currentDay := today.Weekday()
-		today_string := currentDay.String()
+		today_string := strings.ToLower(currentDay.String())
+
 		fmt.Println("Hôm nay là ngày " + today_string)
 		dayNumber := int(currentDay)
+		fmt.Println(dayNumber)
+		c.Send("Thời khóa biểu hôm nay " + day_vietnamese[dayNumber])
 
 		pgdata := pg.PG()
-		timetable := pg.GetTimeTableByDay(pgdata, "saturday")
-		fmt.Println(timetable)
+		timetable := pg.GetTimeTableByDay(pgdata, today_string)
+		for _, tkb := range timetable {
+			lecturer := fmt.Sprintf("%s\n\n", tkb.LecturerName)
+			message := ""
+			if tkb.Monday != "" {
+				if dayNumber == 1 {
+					message += "✅Thứ hai: " + tkb.Monday + "\n"
+				}
+			}
+			if tkb.Tuesday != "" {
+				if dayNumber == 2 {
+					message += "✅Thứ ba: " + tkb.Tuesday + "\n"
+				}
+			}
+			if tkb.Wednesday != "" {
+				if dayNumber == 3 {
+					message += "✅Thứ tư: " + tkb.Wednesday + "\n"
 
-		c.Send("Thời khóa biểu hôm nay, thứ " + day_vietnamese[dayNumber])
+				}
+			}
+			if tkb.Thursday != "" {
+				if dayNumber == 4 {
+					message += "✅Thứ năm: " + tkb.Thursday + "\n"
+				}
+
+			}
+			if tkb.Friday != "" {
+				if dayNumber == 5 {
+					message += "✅Thứ sáu: " + tkb.Friday + "\n"
+				}
+
+			}
+			if tkb.Saturday != "" {
+				if dayNumber == 6 {
+					message += "✅Thứ bảy: " + tkb.Saturday + "\n"
+				}
+
+			}
+			if tkb.Sunday != "" {
+				if dayNumber == 0 {
+					message += "✅Chủ nhật: " + tkb.Sunday + "\n"
+				}
+			}
+			if tkb.Notes != "" {
+				message += "\n🔥Lưu ý: " + tkb.Notes + "\n"
+			}
+			if len(message) > 0 {
+				message_send := lecturer + message
+				c.Send(message_send)
+			}
+		}
+
 		return nil
 	})
 }
