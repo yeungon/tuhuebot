@@ -9,6 +9,7 @@ func Handle(b *tele.Bot) {
 	handle.About(b)
 	handle.Qa(b)
 	handle.Assistant(b)
+	handle.AssistantTask(b)
 	handle.Info(b)
 	handle.Start(b)
 	handle.Tailieu(b)
@@ -22,5 +23,6 @@ func Handle(b *tele.Bot) {
 	handle.TimeTable(b)
 	handle.Status(b)
 	handle.Log(b)
-	handle.Submit(b) //Should be put at the end of the list.
+	handle.Backup(b)
+	handle.Submit(b) //Should be put at the end of the list as this handle will receive the post (submit) from user
 }

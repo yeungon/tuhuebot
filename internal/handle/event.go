@@ -25,7 +25,9 @@ func HandleEvent(c tele.Context, month int) {
 }
 
 func Event(b *tele.Bot) {
-	currentTime := time.Now()
+	timeLoc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+	currentTime := time.Now().In(timeLoc)
+
 	currentMonth = int(currentTime.Month())
 	previousMonth := currentMonth - 1
 	nextMonth := currentMonth + 1
