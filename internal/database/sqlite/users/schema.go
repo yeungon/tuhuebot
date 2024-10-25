@@ -22,9 +22,9 @@ type User struct {
 	AttemptCounting         int64               `bun:",nullzero,default:0"`                // How many time the user type the password
 	QuestionAnswerTracking  int64               `bun:",nullzero,default:0"`                // How many time the user type the password
 	ExternalData            int64               `bun:",nullzero,default:0"`                // How many time the user type the password
-	FirstName               string              `bun:",notnull"`                           // User's or bot's first name.
+	FirstName               string              `bun:",nullzero"`                          // User's or bot's first name.
 	LastName                *string             `bun:",nullzero"`                          // Optional. User's or bot's last name.
-	Username                *string             `bun:",nullzero,unique"`                   // Optional. User's or bot's username.
+	Username                *string             `bun:",nullzero"`                          // Optional. User's or bot's username.
 	LanguageCode            *string             `bun:",nullzero"`                          // Optional. User's language.
 	IsPremium               bool                `bun:",notnull,default:false"`             // Optional. True if the user is a Premium user.
 	AddedToAttachmentMenu   bool                `bun:",notnull,default:false"`             // Indicates if the user added the bot to the attachment menu.
