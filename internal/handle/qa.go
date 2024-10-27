@@ -11,16 +11,38 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
-var current int = 1
+var current int = 0
 
-func FetchQAPG(b *tele.Bot, c tele.Context) {
+func FetchQAPG(b *tele.Bot, c tele.Context, pagination int) {
 	c.Send("Các câu hỏi thường gặp")
 	current_user := c.Sender()
 	pgdata := pg.PG()
 	question_answer := pg.GetQuestionAnswer(pgdata)
-	for index, record := range question_answer {
+	total_qa := len(question_answer)
+	fmt.Printf("Tổng số qa:  %d", total_qa)
+	fmt.Printf("\nPagination %d", pagination)
+
+	step := 5 * pagination
+	starting := 0 + step
+	ending := starting + 5
+
+	if ending >= total_qa {
+		ending = total_qa
+		starting = ending - 5
+		step = ending
+	}
+
+	if starting < 0 {
+		starting = 0
+		ending = starting + 5
+		step = 0
+	}
+
+	portion_slice := question_answer[starting:ending]
+
+	for index, record := range portion_slice {
 		if record.Published == true {
-			index_string := strconv.Itoa(index + 1)
+			index_string := strconv.Itoa(index + 1 + step)
 			questionMsg := "🌓 🅀🅄🄴🅂🅃🄸🄾🄽 <i>" + index_string + ": " + record.Question + "</i>"
 			b.Send(current_user, questionMsg, &tele.SendOptions{
 				ParseMode: "HTML",
@@ -35,15 +57,14 @@ func FetchQAPG(b *tele.Bot, c tele.Context) {
 }
 
 func Qa(b *tele.Bot) {
-	current = current + 1
 	b.Handle("/qa", func(c tele.Context) error {
-		FetchQAPG(b, c)
+		FetchQAPG(b, c, current)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
 
 	b.Handle(&helpers.QA, func(c tele.Context) error {
-		FetchQAPG(b, c)
+		FetchQAPG(b, c, current)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
@@ -56,10 +77,8 @@ func ControlQuestion(b *tele.Bot) {
 		//FetchQa(b, c)
 		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		current = current - 1
-		current := strconv.Itoa(int(current))
-		c.Send(current)
-		fmt.Println(current)
-		c.Send("test back")
+		FetchQAPG(b, c, current)
+		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
 
@@ -67,10 +86,8 @@ func ControlQuestion(b *tele.Bot) {
 		//FetchQa(b, c)
 		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		current = current + 1
-		current := strconv.Itoa(int(current))
-		c.Send(current)
-		fmt.Println(current)
-		c.Send("test forward")
+		FetchQAPG(b, c, current)
+		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
 }

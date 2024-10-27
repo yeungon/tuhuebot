@@ -8,16 +8,25 @@
    `cd tuhuebot`
 
 2. **Install dependencies:**
-    `go mod tidy`
+    
+   `go mod tidy`
 3. **Build the binary:**
+   
     `make build`
 4. **Configure the service file yourselt and copy to system:**
     Change the content of tuhuebot.service if needed (location of the code, for example).
+    
     `sudo cp tuhuebot.service /etc/systemd/system/`
 5. **Enable and Start the Service:**
+    
     `sudo systemctl enable tuhuebot`
+    
     `sudo systemctl start tuhuebot`
 6. **Check Service Status: Verify that the bot is running correctly:**
+    
     `sudo systemctl status tuhuebot`
 
 
+### Database
+    
+Currently `@tuhuebot` is using sqlite and postgresql database. Cache implemented via bigCache.

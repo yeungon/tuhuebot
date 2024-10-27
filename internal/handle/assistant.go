@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
@@ -14,10 +15,17 @@ func HandleAssistant(c tele.Context) error {
 	db := sqlite.DB()
 	current_user := users.GetCurrentUser(db, user)
 
-	if current_user.Level > 1 {
-		message := fmt.Sprintf("Xin chào %v, các tùy chọn nghiệp vụ:", *current_user.Username)
-		c.Send(message, helpers.Assitant_InlineKeys)
+	userInfo := current_user.FirstName
+	if len(userInfo) == 0 {
+		userInfo = *current_user.Username
+	}
+	if len(userInfo) == 0 {
+		userInfo = strconv.FormatInt(current_user.ID, 10)
+	}
 
+	if current_user.Level > 1 {
+		message := fmt.Sprintf("Xin chào %v, các tùy chọn nghiệp vụ:", userInfo)
+		c.Send(message, helpers.Assitant_InlineKeys)
 		return nil
 	}
 
@@ -28,7 +36,6 @@ func HandleAssistant(c tele.Context) error {
 }
 
 func Assistant(b *tele.Bot) {
-
 	b.Handle("/assistant", func(c tele.Context) error {
 		HandleAssistant(c)
 		return nil

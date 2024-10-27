@@ -30,6 +30,7 @@ func GetQuestionAnswer(db *bun.DB) []QA {
 	var question_answer []QA
 	err = db.NewSelect().
 		Model(&question_answer).
+		Where("published=TRUE").
 		Order("xata_createdat ASC").
 		Scan(ctx)
 	if err != nil {
