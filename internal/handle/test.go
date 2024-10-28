@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/yeungon/tuhuebot/internal/config"
 	"github.com/yeungon/tuhuebot/internal/database/bbolt"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
@@ -216,16 +215,6 @@ func Test(b *tele.Bot) {
 		if helpers.IsAdmin(c) == false {
 			return nil
 		}
-
-		admin_id := config.Get().AdminID
-		num, err := strconv.ParseInt(admin_id, 10, 64)
-
-		if err != nil {
-			fmt.Println("Error converting string to int64:", err)
-			return err
-		}
-
-		b.Send(tele.ChatID(num), "Hello, admin")
 		return nil
 	})
 

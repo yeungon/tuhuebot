@@ -31,12 +31,22 @@ func getName(c tele.Context) string {
 	return c.Sender().Username
 }
 
+func notifyAdmin(b *tele.Bot, message string) error {
+	admin_id := config.Get().AdminID
+	num, err := strconv.ParseInt(admin_id, 10, 64)
+	if err != nil {
+		fmt.Println("Error converting string to int64:", err)
+		return err
+	}
+	b.Send(tele.ChatID(num), "Một câu hỏi mới vừa được gửi với nội dung:\n "+message)
+	return nil
+}
+
 func Submit(b *tele.Bot) {
 	b.Handle(tele.OnText, func(c tele.Context) error {
 		user := c.Sender().ID
 		db := sqlite.DB()
 		current_user := users.GetCurrentUser(db, user)
-
 		if current_user.State == true {
 			user_input := strings.TrimSpace(c.Text())
 			passcode := check_passcode(user_input)
@@ -57,10 +67,8 @@ func Submit(b *tele.Bot) {
 			user_asked := strconv.FormatInt(c.Sender().ID, 10)
 			fmt.Println(user_asked)
 			user_input := strings.TrimSpace(c.Text())
-
 			// Store the question into the database at XATA
 			pgdata := pg.PG()
-
 			var answer string = "" // No answer provided
 			newQA := &pg.QA{
 				UserAsked:     user_asked, // Example user ID
@@ -75,6 +83,7 @@ func Submit(b *tele.Bot) {
 
 			c.Send("Cảm ơn bạn đã đặt câu hỏi 🤗💯. Bot sẽ cập nhật dữ liệu khi có câu trả lời.\nTruy cập /qa để theo dõi!\n")
 			c.Send("Chế độ nhận câu hỏi đã đóng!🔒")
+			notifyAdmin(b, user_input)
 			return nil
 		}
 
