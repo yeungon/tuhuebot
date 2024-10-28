@@ -10,6 +10,7 @@ require (
 	github.com/uptrace/bun/dialect/sqlitedialect v1.2.5
 	github.com/uptrace/bun/driver/pgdriver v1.2.5
 	github.com/uptrace/bun/driver/sqliteshim v1.2.5
+	go.etcd.io/bbolt v1.3.11
 	gopkg.in/telebot.v3 v3.3.8
 )
 

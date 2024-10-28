@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/internal/database/bbolt"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	logging "github.com/yeungon/tuhuebot/pkg/log"
@@ -24,7 +25,9 @@ func Init() {
 	pg.Connect()
 	pgdatabase := pg.PG().DB
 	defer pgdatabase.Close()
-	//=================================
+	//===============bbolt==================
+	dbbolt := bbolt.Connect()
+	defer dbbolt.Close()
 
 	token := config.Get().Token
 	Pref := tele.Settings{

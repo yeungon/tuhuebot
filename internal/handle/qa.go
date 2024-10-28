@@ -1,9 +1,11 @@
 package handle
 
 import (
+	"encoding/binary"
 	"fmt"
 	"strconv"
 
+	"github.com/yeungon/tuhuebot/internal/database/bbolt"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
@@ -11,18 +13,70 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
-var current int = 0
+func IntToBytes(n int) []byte {
+	b := make([]byte, 8) // Use 8 bytes for int64 or uint64
+	binary.BigEndian.PutUint64(b, uint64(n))
+	return b
+}
 
-func FetchQAPG(b *tele.Bot, c tele.Context, pagination int) {
+func BytesToInt(b []byte) int {
+	return int(binary.BigEndian.Uint64(b))
+}
+
+func UpdateOffset(c tele.Context, stepstate int, possible_offset int) int {
+	current_user := c.Sender()
+	current_user_kv := fmt.Sprintf("%v", current_user.ID)
+	current_user_pagination := bbolt.UserRead([]byte(current_user_kv))
+
+	var currentState int
+
+	if len(current_user_pagination) == 0 {
+		// If no value exists, initialize it to 0.
+		fmt.Println("current_user_pagination empty byte[]")
+		currentState = 0
+	} else {
+		// Convert the existing byte array to an integer.
+		currentState = BytesToInt(current_user_pagination)
+		fmt.Printf("Current state as int: %d\n", currentState)
+	}
+
+	// Calculate the new state by adding the step.
+	newState := currentState + stepstate
+	if newState < 0 {
+		newState = 0
+	}
+
+	if newState >= possible_offset {
+		newState = possible_offset
+	}
+
+	// Defer the update so that it happens after returning the new state.
+	defer func() {
+		fmt.Printf("Saving new state: %d\n", newState)
+		bbolt.UserAdd([]byte(current_user_kv), IntToBytes(newState))
+	}()
+
+	// Return the new state.
+	return newState
+}
+
+func FetchQAPG(b *tele.Bot, c tele.Context, control int) {
 	c.Send("Các câu hỏi thường gặp")
 	current_user := c.Sender()
+
 	pgdata := pg.PG()
 	question_answer := pg.GetQuestionAnswer(pgdata)
 	total_qa := len(question_answer)
-	fmt.Printf("Tổng số qa:  %d", total_qa)
-	fmt.Printf("\nPagination %d", pagination)
+	possible_offset := total_qa / 5
 
-	step := 5 * pagination
+	fmt.Printf("Tổng số qa:  %d\n", total_qa)
+	fmt.Printf("possible_offset:  %d\n", possible_offset)
+
+	offset := UpdateOffset(c, control, possible_offset)
+
+	fmt.Printf("Offset hiện tại: %d", offset)
+
+	step := 5 * offset
 	starting := 0 + step
 	ending := starting + 5
 
@@ -58,13 +112,13 @@ func FetchQAPG(b *tele.Bot, c tele.Context, pagination int) {
 
 func Qa(b *tele.Bot) {
 	b.Handle("/qa", func(c tele.Context) error {
-		FetchQAPG(b, c, current)
+		FetchQAPG(b, c, 0)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
 
 	b.Handle(&helpers.QA, func(c tele.Context) error {
-		FetchQAPG(b, c, current)
+		FetchQAPG(b, c, 0)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
@@ -74,19 +128,15 @@ func Qa(b *tele.Bot) {
 
 func ControlQuestion(b *tele.Bot) {
 	b.Handle(&helpers.Back_QA, func(c tele.Context) error {
-		//FetchQa(b, c)
-		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
-		current = current - 1
-		FetchQAPG(b, c, current)
+		fmt.Println("Control -")
+		FetchQAPG(b, c, -1)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
 
 	b.Handle(&helpers.Forward_QA, func(c tele.Context) error {
-		//FetchQa(b, c)
-		//c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
-		current = current + 1
-		FetchQAPG(b, c, current)
+		fmt.Println("Control +")
+		FetchQAPG(b, c, 1)
 		c.Send("Xem các câu hỏi khác", helpers.QA_Menu_InlineKeys)
 		return nil
 	})
@@ -94,7 +144,7 @@ func ControlQuestion(b *tele.Bot) {
 
 func PostQuestion(b *tele.Bot) {
 	b.Handle(&helpers.Post_QA, func(c tele.Context) error {
-		c.Send(current)
+		// c.Send(current)
 		user_id := c.Sender().ID
 		user := c.Sender().ID
 		db := sqlite.DB()

@@ -36,6 +36,8 @@ config/*
 
 #sqlite database
 tuhuebot.db
+#bbolt k-v database
+tuhuebot_kv.db
 
 # log file
 tuhuebot.json

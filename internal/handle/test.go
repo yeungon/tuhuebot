@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/yeungon/tuhuebot/internal/database/bbolt"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
@@ -168,24 +169,46 @@ func Test(b *tele.Bot) {
 		fmt.Println("Testing log")
 		return nil
 	})
-	b.Handle("/time", func(c tele.Context) error {
+	b.Handle("/bbolt", func(c tele.Context) error {
 		if helpers.IsAdmin(c) == false {
 			return nil
 		}
+		fmt.Println("testing kv bbolt")
 
-		timeLoc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
-		today := time.Now().In(timeLoc)
-		fmt.Println("Asia/Ho_Chi_Minh:", today)
+		random := rand.Intn(100)
 
-		loc, _ := time.LoadLocation("America/New_York")
-		now := time.Now().In(loc)
-		fmt.Println("New York time:", now)
+		byteData := []byte(strconv.Itoa(random))
 
-		server := time.Now()
-		fmt.Println("Server time:", server)
+		bbolt.UserAdd([]byte("12345"), byteData)
+		return nil
+	})
+
+	b.Handle("/read", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+		bbolt.PrintAllKeyValues("users")
+		return nil
+	})
+
+	b.Handle("/add", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+		current_user := c.Sender()
+		current_user_kv := fmt.Sprintf("%v", current_user.ID)
+		bbolt.UserAdd([]byte(current_user_kv), IntToBytes(100))
 
 		return nil
+	})
 
+	b.Handle("/clean", func(c tele.Context) error {
+		if helpers.IsAdmin(c) == false {
+			return nil
+		}
+		bbolt.CleanAllKeyValues("users")
+		fmt.Println("Clean up the k-v")
+		return nil
 	})
 
 }
