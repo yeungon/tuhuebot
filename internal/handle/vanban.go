@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-rod/rod"
+	"github.com/go-rod/rod/lib/launcher"
 	"github.com/yeungon/tuhuebot/internal/config"
 	tele "gopkg.in/telebot.v3"
 )
@@ -37,7 +38,10 @@ func TimeFetch() string {
 }
 
 func HandleVanban(c tele.Context) {
-	browser := rod.New().MustConnect().NoDefaultDevice()
+	// Launch a new browser with custom flags using rod.Launcher
+	url := launcher.New().NoSandbox(true).MustLaunch()
+	// Connect to the launched browser using ControlURL
+	browser := rod.New().ControlURL(url).MustConnect()
 	page := browser.MustPage("https://qlvb.dhsphue.edu.vn").MustWindowFullscreen()
 
 	var sph_username = config.Get().SPH_USERNAME
@@ -46,7 +50,7 @@ func HandleVanban(c tele.Context) {
 	page.MustElement("#txt_pws").MustInput(sph_password)
 	page.MustElement("#bt_login").MustClick()
 	time.Sleep(300 * time.Microsecond)
-	page.MustElement("#bt_main").MustClick()
+	page.MustWaitStable().MustElement("#bt_main").MustClick()
 
 	createFolder()
 
