@@ -41,3 +41,7 @@ tuhuebot_kv.db
 
 # log file
 tuhuebot.json
+
+vanban
+vanban/*
+bin/*
