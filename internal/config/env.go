@@ -9,10 +9,12 @@ import (
 )
 
 type Env struct {
-	Token    string
-	AdminID  string
-	PASSCODE string
-	PG       string
+	Token        string
+	AdminID      string
+	PASSCODE     string
+	PG           string
+	SPH_USERNAME string
+	SPH_PASSWORD string
 }
 
 var once sync.Once
@@ -29,12 +31,16 @@ func New() {
 		admin_id := os.Getenv("ADMIN_ID")
 		pass_code := os.Getenv("PASSCODE")
 		postgresq := os.Getenv("PG")
+		sph_username := os.Getenv("SPH_USERNAME")
+		sph_password := os.Getenv("SPH_PASSWORD")
 
 		env = &Env{
-			Token:    token,
-			AdminID:  admin_id,
-			PASSCODE: pass_code,
-			PG:       postgresq,
+			Token:        token,
+			AdminID:      admin_id,
+			PASSCODE:     pass_code,
+			PG:           postgresq,
+			SPH_USERNAME: sph_username,
+			SPH_PASSWORD: sph_password,
 		}
 
 	})
