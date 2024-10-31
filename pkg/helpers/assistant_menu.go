@@ -18,9 +18,17 @@ var Assistant_Tasks = tele.InlineButton{
 	Data:   "button1_clicked",
 }
 
+// Define five inline buttons
+var Tracking_Announcement = tele.InlineButton{
+	Unique: "btn_callback1_time_tracking_announcement",
+	Text:   "Theo dõi công văn mới nhất",
+	Data:   "button1_clicked",
+}
+
 var Assitant_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
 		{LecturerTimeTable},
 		{Assistant_Tasks},
+		{Tracking_Announcement},
 	},
 }

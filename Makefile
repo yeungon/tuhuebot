@@ -1,6 +1,12 @@
+# Variables
+SERVICE_FILE := tuhuebot.service
+INSTALL_PATH := /etc/systemd/system/
+# Install the service file to /etc/systemd/system/
+install:
+	sudo cp $(SERVICE_FILE) $(INSTALL_PATH)
 run: build
 	@ ./bin/tuhuebot
-build:
+build: 
 	@go build -o bin/tuhuebot -buildvcs=false
 dev:
 	go run main.go

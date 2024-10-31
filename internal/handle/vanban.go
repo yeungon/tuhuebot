@@ -8,6 +8,7 @@ import (
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/launcher"
 	"github.com/yeungon/tuhuebot/internal/config"
+	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -60,11 +61,11 @@ func HandleVanban(c tele.Context) {
 }
 
 func Vanban(b *tele.Bot) {
-	b.Handle("/vanban", func(c tele.Context) error {
+	b.Handle(&helpers.Tracking_Announcement, func(c tele.Context) error {
 		var fileName = "vanban/" + FileName()
 		if _, err := os.Stat(fileName); err == nil {
 			fmt.Println("File exists:", fileName)
-			c.Send("Đây là file ảnh chụp tại thời điểm gần đây! Thời gian: " + TimeFetch())
+			c.Send("Đây là file ảnh chụp tại thời điểm gần đây nhất. Thời gian: " + TimeFetch())
 		} else if os.IsNotExist(err) {
 			c.Send("Đang truy cập và lấy dữ liệu văn bản. Xin đợi... Thời gian: " + TimeFetch())
 			HandleVanban(c)
