@@ -7,13 +7,13 @@ import (
 // Define five inline buttons
 var PreviousMonth_Task = tele.InlineButton{
 	Unique: "btn_callback1_previous_month_task_assisstant",
-	Text:   "Công việc tháng trước ⏪",
+	Text:   "Việc tháng trước ⏪",
 	Data:   "button1_clicked",
 }
 
 var NextMonth_Task = tele.InlineButton{
 	Unique: "btn_callback2_next_month_task_assisstant",
-	Text:   "⏩ Công việc tháng tới",
+	Text:   "⏩ Việc tháng tới",
 	Data:   "button2_clicked",
 }
 

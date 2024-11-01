@@ -27,8 +27,8 @@ var Tracking_Announcement = tele.InlineButton{
 
 var Assitant_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
-		{LecturerTimeTable},
-		{Assistant_Tasks},
 		{Tracking_Announcement},
+		{Assistant_Tasks},
+		{LecturerTimeTable},
 	},
 }

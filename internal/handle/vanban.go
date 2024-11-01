@@ -12,16 +12,33 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
+func FolderExists(path string) (bool, error) {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	if err != nil {
+		return false, err
+	}
+	return info.IsDir(), nil
+}
+
 func createFolder() {
 	dirName := "vanban"
-	// Create the directory
-	err := os.Mkdir(dirName, 0755) // 0755 is the permission
+	exists, err := FolderExists(dirName)
 	if err != nil {
-		fmt.Println("Error creating directory:", err)
-		return
+		fmt.Println("Error:", err)
+	} else if exists {
+		fmt.Printf("Folder %s exists\n!", dirName)
+	} else {
+		// Create the directory
+		err = os.Mkdir(dirName, 0755) // 0755 is the permission
+		if err != nil {
+			fmt.Println("Error creating directory:", err)
+			return
+		}
+		fmt.Println("Directory created successfully:", dirName)
 	}
-
-	fmt.Println("Directory created successfully:", dirName)
 }
 
 func FileName() string {
