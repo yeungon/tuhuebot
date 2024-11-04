@@ -61,7 +61,6 @@ func UpdateOffset(c tele.Context, stepstate int, possible_offset int) int {
 }
 
 func FetchQAPG(b *tele.Bot, c tele.Context, control int) {
-	c.Send("Các câu hỏi thường gặp")
 	current_user := c.Sender()
 
 	pgdata := pg.PG()
@@ -69,12 +68,16 @@ func FetchQAPG(b *tele.Bot, c tele.Context, control int) {
 	total_qa := len(question_answer)
 	possible_offset := total_qa / 5
 
+	inform_Message := fmt.Sprintf("Các câu hỏi thường gặp. Hiện có %d câu hỏi.", total_qa)
+
+	c.Send(inform_Message)
+
 	fmt.Printf("Tổng số qa:  %d\n", total_qa)
 	fmt.Printf("possible_offset:  %d\n", possible_offset)
 
 	offset := UpdateOffset(c, control, possible_offset)
 
-	fmt.Printf("Offset hiện tại: %d", offset)
+	fmt.Printf("Offset hiện tại: %d \n", offset)
 
 	step := 5 * offset
 	starting := 0 + step
@@ -94,9 +97,11 @@ func FetchQAPG(b *tele.Bot, c tele.Context, control int) {
 
 	portion_slice := question_answer[starting:ending]
 
+	fmt.Println("starting-ending: ", starting, ending)
+
 	for index, record := range portion_slice {
 		if record.Published == true {
-			index_string := strconv.Itoa(index + 1 + step)
+			index_string := strconv.Itoa(index + starting + 1)
 			questionMsg := "🌓 🅀🅄🄴🅂🅃🄸🄾🄽 <i>" + index_string + ": " + record.Question + "</i>"
 			b.Send(current_user, questionMsg, &tele.SendOptions{
 				ParseMode: "HTML",
