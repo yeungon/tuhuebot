@@ -24,6 +24,7 @@ func Handle(b *tele.Bot) {
 	handle.Status(b)
 	handle.Log(b)
 	handle.Vanban(b)
+	handle.Calendar(b)
 	handle.Backup(b)
 	handle.Submit(b) //Should be put at the end of the list as this handle will receive the post (submit) from user
 }
