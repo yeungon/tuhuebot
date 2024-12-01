@@ -14,6 +14,10 @@ func HandleAssistantTask(c tele.Context, month int) {
 	current_thang := helpers.GetCurrentMonth()
 	info_thang := int(current_thang + month)
 
+	if info_thang > 12 {
+		info_thang = 1
+	}
+
 	introduction := "Các công việc cần chú ý của tháng " + strconv.Itoa(info_thang) + ": "
 	c.Send(introduction)
 	for _, event := range events {
