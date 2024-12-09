@@ -15,6 +15,7 @@ type Env struct {
 	PG           string
 	SPH_USERNAME string
 	SPH_PASSWORD string
+	STUDENT_LIST string
 }
 
 var once sync.Once
@@ -33,6 +34,7 @@ func New() {
 		postgresq := os.Getenv("PG")
 		sph_username := os.Getenv("SPH_USERNAME")
 		sph_password := os.Getenv("SPH_PASSWORD")
+		student_list := os.Getenv("STUDENT_LIST")
 
 		env = &Env{
 			Token:        token,
@@ -41,6 +43,7 @@ func New() {
 			PG:           postgresq,
 			SPH_USERNAME: sph_username,
 			SPH_PASSWORD: sph_password,
+			STUDENT_LIST: student_list,
 		}
 
 	})
