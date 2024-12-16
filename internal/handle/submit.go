@@ -90,7 +90,8 @@ func Submit(b *tele.Bot) {
 		}
 
 		if current_user.StateChecking == true {
-			user_input := strings.TrimSpace(c.Text())
+			user_input := strings.ToUpper(strings.TrimSpace(c.Text()))
+
 			if len(user_input) != 10 {
 				c.Send("😮‍💨 Mã số sinh viên không chính xác! Mã số sinh viên có 10 ký tự. Hệ thống hiện chỉ hỗ trợ sinh viên khoa Giáo dục Tiểu học. Xin nhập lại mã sinh viên: ")
 				return nil
