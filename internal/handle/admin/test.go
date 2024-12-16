@@ -1,6 +1,7 @@
-package handle
+package admin
 
 import (
+	"encoding/binary"
 	"fmt"
 	"log/slog"
 	"math/rand"
@@ -217,4 +218,10 @@ func Test(b *tele.Bot) {
 		}
 		return nil
 	})
+}
+
+func IntToBytes(n int) []byte {
+	b := make([]byte, 8) // Use 8 bytes for int64 or uint64
+	binary.BigEndian.PutUint64(b, uint64(n))
+	return b
 }

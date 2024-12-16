@@ -1,4 +1,4 @@
-package handle
+package admin
 
 import (
 	"github.com/yeungon/tuhuebot/pkg/helpers"

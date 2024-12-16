@@ -18,6 +18,9 @@ type User struct {
 	Level                   int64               `bun:",notnull,default:1"`                 //
 	State                   bool                `bun:",notnull,default:false"`             //
 	StateAsking             bool                `bun:",notnull,default:false"`             // If receive the question
+	StateChecking           bool                `bun:",notnull,default:false"`             // If receive the question
+	StateFetching           bool                `bun:",notnull,default:false"`             // If receive the question
+	StateManipulating       bool                `bun:",notnull,default:false"`             // If receive the question
 	StateBlocking           bool                `bun:",notnull,default:false"`             // If receive the question
 	AttemptCounting         int64               `bun:",nullzero,default:0"`                // How many time the user type the password
 	QuestionAnswerTracking  int64               `bun:",nullzero,default:0"`                // How many time the user type the password

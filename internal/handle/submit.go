@@ -10,6 +10,7 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
+	"github.com/yeungon/tuhuebot/internal/handle/assistants"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
 	tele "gopkg.in/telebot.v3"
 )
@@ -47,6 +48,7 @@ func Submit(b *tele.Bot) {
 		user := c.Sender().ID
 		db := sqlite.DB()
 		current_user := users.GetCurrentUser(db, user)
+
 		if current_user.State == true {
 			user_input := strings.TrimSpace(c.Text())
 			passcode := check_passcode(user_input)
@@ -87,6 +89,21 @@ func Submit(b *tele.Bot) {
 			return nil
 		}
 
+		if current_user.StateChecking == true {
+			user_input := strings.TrimSpace(c.Text())
+			if len(user_input) != 10 {
+				c.Send("😮‍💨 Mã số sinh viên không chính xác! Mã số sinh viên có 10 ký tự. Hệ thống hiện chỉ hỗ trợ sinh viên khoa Giáo dục Tiểu học. Xin nhập lại mã sinh viên: ")
+				return nil
+			}
+
+			assistants.StudentCheckFetch(c, user_input)
+			users.SetUserStateChecking(db, user, false)
+			c.Send("Chế độ xem thông tin sinh viên đã đóng!🔒")
+			c.Send("Tùy chọn tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
+			return nil
+		}
+
+		// Thông báo chung
 		fmt.Println(user)
 		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")
 	})

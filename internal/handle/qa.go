@@ -73,11 +73,11 @@ func FetchQAPG(b *tele.Bot, c tele.Context, control int) {
 	c.Send(inform_Message)
 
 	fmt.Printf("Tổng số qa:  %d\n", total_qa)
-	fmt.Printf("possible_offset:  %d\n", possible_offset)
+	// fmt.Printf("possible_offset:  %d\n", possible_offset)
 
 	offset := UpdateOffset(c, control, possible_offset)
 
-	fmt.Printf("Offset hiện tại: %d \n", offset)
+	// fmt.Printf("Offset hiện tại: %d \n", offset)
 
 	step := 5 * offset
 	starting := 0 + step

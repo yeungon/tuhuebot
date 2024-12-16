@@ -1,4 +1,4 @@
-package handle
+package assistants
 
 import (
 	"github.com/yeungon/tuhuebot/internal/config"
