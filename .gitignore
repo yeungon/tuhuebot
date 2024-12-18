@@ -36,6 +36,7 @@ config/*
 
 #sqlite database
 tuhuebot.db
+student.db
 #bbolt k-v database
 tuhuebot_kv.db
 
