@@ -46,4 +46,9 @@ func Assistant(b *tele.Bot) {
 		return nil
 	})
 
+	b.Handle(&helpers.Back_To_Main_Menu_Assistant, func(c tele.Context) error {
+		HandleAssistant(c)
+		return nil
+	})
+
 }
