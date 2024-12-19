@@ -16,3 +16,8 @@ func UserStateChecking(db *bun.DB, telegram_id int64) bool {
 	current_user := GetCurrentUser(db, telegram_id)
 	return current_user.StateChecking
 }
+
+func UserStateFetching(db *bun.DB, telegram_id int64) bool {
+	current_user := GetCurrentUser(db, telegram_id)
+	return current_user.StateFetching
+}

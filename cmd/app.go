@@ -15,12 +15,16 @@ import (
 
 func Init() {
 	logging.Log()
-
 	config.New()
+
 	// =============sqlite=============
 	sqlite.BunConnect()
 	db := sqlite.DB()
 	defer db.Close()
+
+	sqlite.BunStudentConnect()
+	dbstudent := sqlite.DBSTUDENT()
+	defer dbstudent.Close()
 	//================PG=================
 	pg.Connect()
 	pgdatabase := pg.PG().DB

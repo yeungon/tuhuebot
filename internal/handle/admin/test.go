@@ -11,6 +11,7 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/bbolt"
 	"github.com/yeungon/tuhuebot/internal/database/pg"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite"
+	"github.com/yeungon/tuhuebot/internal/database/sqlite/students"
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/pkg/cache"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
@@ -91,14 +92,15 @@ func Test(b *tele.Bot) {
 		if helpers.IsAdmin(c) == false {
 			return nil
 		}
-		db := sqlite.DB()
-		users_data := []*users.User{
-			{FirstName: "Alice", TelegramUserID: 30},
+		fmt.Println("Testing bun Student DB ORM")
+		db := sqlite.DBSTUDENT()
+		student_search := students.SearchStudent(db, "lê thị loan")
+		// fmt.Println(student_search)
+		for _, student := range student_search {
+			fmt.Println(student.Name)
+			c.Send(student.Name)
 		}
 
-		users.CreateUser(db, users_data)
-
-		fmt.Println("Testing bun ORM")
 		return nil
 	})
 

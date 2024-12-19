@@ -104,6 +104,16 @@ func Submit(b *tele.Bot) {
 			return nil
 		}
 
+		if current_user.StateFetching == true {
+			user_input := strings.TrimSpace(c.Text())
+			c.Send("Kết quả tìm kiếm với từ khóa: " + user_input)
+			assistants.StudentSearchFetch(c, user_input)
+			users.SetUserStateFetching(db, user, false)
+			c.Send("Chế độ tìm kiếm thông tin sinh viên đã đóng!🔒")
+			c.Send("Tùy chọn tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
+			return nil
+		}
+
 		// Thông báo chung
 		fmt.Println(user)
 		return c.Send("Sorry, bot không xử lý các thông tin bạn gửi lên!")

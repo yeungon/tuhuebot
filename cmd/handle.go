@@ -23,6 +23,7 @@ func Handle(b *tele.Bot) {
 	assistants.Studentlist(b)
 	assistants.TimeTable(b)
 	assistants.StudentCheck(b)
+	assistants.SearchStudent(b)
 
 	// Public--level 1 --------------
 	handle.About(b)

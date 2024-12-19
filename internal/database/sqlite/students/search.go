@@ -1,21 +1,25 @@
 package students
 
-func SearchStudent() {
-	// var ctx = context.Background()
-	// var db *sql.DB
+import (
+	"context"
+	"log"
 
-	// // db := bun.NewDB(sqliteConn, "sqliteDialect")
-	// var results []StudentFTS
-	// err := db.NewSelect().
-	// 	Model(&results).
-	// 	Where("students_fts MATCH ?", "search_query").
-	// 	Scan(ctx)
-	// if err != nil {
-	// 	log.Fatalf("Query failed: %v", err)
-	// }
+	"github.com/uptrace/bun"
+)
 
-	// for _, student := range results {
+func SearchStudent(db *bun.DB, search_querys string) []StudentFTS {
+	var ctx = context.Background()
+	var student_search []StudentFTS
+	err := db.NewSelect().
+		Model(&student_search).
+		Where("students_fts MATCH ?", search_querys).
+		Scan(ctx)
+	if err != nil {
+		log.Fatalf("Query failed: %v", err)
+	}
+
+	// for _, student := range student_search {
 	// 	fmt.Println("Name:", student.Name)
 	// }
-
+	return student_search
 }

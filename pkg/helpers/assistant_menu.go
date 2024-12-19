@@ -46,6 +46,13 @@ var Students_Check = tele.InlineButton{
 	Data:   "button1_clicked",
 }
 
+// Define five inline buttons
+var Students_Search = tele.InlineButton{
+	Unique: "btn_callback1_student_search",
+	Text:   "Tìm kiếm sinh viên",
+	Data:   "button1_clicked_search",
+}
+
 var Assitant_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
 		{Tracking_Announcement},
@@ -53,6 +60,7 @@ var Assitant_InlineKeys = &tele.ReplyMarkup{
 		{Assistant_Tasks},
 		{LecturerTimeTable},
 		{Students_Check},
+		{Students_Search},
 		{Students_List},
 	},
 }
