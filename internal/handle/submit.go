@@ -112,7 +112,6 @@ func Submit(b *tele.Bot) {
 
 		if current_user.StateFetching == true {
 			user_input := strings.TrimSpace(c.Text())
-			c.Send("Kết quả (tối đa 100) tìm kiếm với từ khóa: " + user_input)
 			assistants.StudentSearchFetch(c, user_input)
 			users.SetUserStateFetching(db, user, false)
 

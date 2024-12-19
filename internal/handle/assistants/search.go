@@ -41,12 +41,14 @@ func KeepSearchingStudent(b *tele.Bot) {
 func StudentSearchFetch(c tele.Context, keyword string) error {
 	db := sqlite.DBSTUDENT()
 	studentSearch := students.SearchStudent(db, keyword)
-
-	if len(studentSearch) == 0 {
+	total := len(studentSearch)
+	if total == 0 {
 		message := fmt.Sprintf("Không tìm thấy thông tin với từ khóa %s.", keyword)
 		return c.Send(message)
 	}
+	result_message := fmt.Sprintf("Tìm được %v kết quả (hiển thị tối đa 100) với từ khóa: %s.", total, keyword)
 
+	c.Send(result_message)
 	for _, student := range studentSearch {
 		message := fmt.Sprintf(
 			"Tên: %s\nMã sinh viên: %s\nGiới tính: %s\nNgày sinh: %s\nLớp: %s\nDân tộc: %s\nCăn cước: %s\nPhone: %s\nEmail: %s\nTỉnh: %s\nĐịa chỉ: %s\nGhi chú: %s",
