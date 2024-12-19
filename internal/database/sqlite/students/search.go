@@ -2,24 +2,27 @@ package students
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/uptrace/bun"
 )
 
-func SearchStudent(db *bun.DB, search_querys string) []StudentFTS {
+func SearchStudent(db *bun.DB, searchQuery string) []StudentFTS {
 	var ctx = context.Background()
-	var student_search []StudentFTS
+	var studentSearch []StudentFTS
+
+	// Quote the search query for exact matching if it contains special characters
+	quotedQuery := fmt.Sprintf("\"%s\"", searchQuery)
+
 	err := db.NewSelect().
-		Model(&student_search).
-		Where("students_fts MATCH ?", search_querys).
+		Model(&studentSearch).
+		Where("students_fts MATCH ?", quotedQuery).
+		Limit(100).
 		Scan(ctx)
 	if err != nil {
 		log.Fatalf("Query failed: %v", err)
 	}
 
-	// for _, student := range student_search {
-	// 	fmt.Println("Name:", student.Name)
-	// }
-	return student_search
+	return studentSearch
 }

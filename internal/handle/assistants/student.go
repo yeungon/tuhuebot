@@ -32,7 +32,7 @@ func PostCheckStudent(b *tele.Bot) {
 		users.SetUserStateChecking(db, user_id, true)
 		current_user_checking := users.UserStateChecking(db, user)
 		fmt.Println(current_user_checking)
-		c.Send("Bot đã bật chế độ xem thông tin sinh viên. Xin nhập mã sinh viên! 😀")
+		c.Send("Bot đã bật chế độ xem thông tin sinh viên. Xin nhập mã sinh viên! 💡")
 		return nil
 	})
 }
@@ -41,12 +41,9 @@ func KeepCheckingStudent(b *tele.Bot) {
 	b.Handle(&helpers.Keep_Checking_Student, func(c tele.Context) error {
 		// c.Send(current)
 		user_id := c.Sender().ID
-		user := c.Sender().ID
 		db := sqlite.DB()
 		users.SetUserStateChecking(db, user_id, true)
-		current_user_checking := users.UserStateChecking(db, user)
-		fmt.Println(current_user_checking)
-		c.Send("Chế độ xem thông tin sinh viên đã được bật lại. Xin nhập mã sinh viên! 😀")
+		c.Send("Chế độ xem thông tin sinh viên đã được bật lại. Xin nhập mã sinh viên! 🌿")
 		return nil
 	})
 }

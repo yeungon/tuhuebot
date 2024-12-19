@@ -12,6 +12,7 @@ import (
 	"github.com/yeungon/tuhuebot/internal/database/sqlite/users"
 	"github.com/yeungon/tuhuebot/internal/handle/assistants"
 	"github.com/yeungon/tuhuebot/pkg/helpers"
+	"gopkg.in/telebot.v3"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -94,23 +95,34 @@ func Submit(b *tele.Bot) {
 
 			if len(user_input) != 10 {
 				c.Send("😮‍💨 Mã số sinh viên không chính xác! Mã số sinh viên có 10 ký tự. Hệ thống hiện chỉ hỗ trợ sinh viên khoa Giáo dục Tiểu học. Xin nhập lại mã sinh viên: ")
+				c.Send("Nhập lại mã sinh viên hoặc chọn các nghiệp vụ khác 👇", helpers.Student_Check_Menu_InlineKeys)
 				return nil
 			}
 
 			assistants.StudentCheckFetch(c, user_input)
 			users.SetUserStateChecking(db, user, false)
-			c.Send("Chế độ xem thông tin sinh viên đã đóng!🔒")
-			c.Send("Tùy chọn tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
+
+			// Emulate red emphasis using emojis
+			htmlMessage := `<b>🔴 Chế độ xem thông tin sinh viên đã đóng!🔒⛔</b>`
+			c.Send(htmlMessage, &telebot.SendOptions{ParseMode: telebot.ModeHTML})
+
+			c.Send("Các tùy chọn nghiệp vụ tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
 			return nil
 		}
 
 		if current_user.StateFetching == true {
 			user_input := strings.TrimSpace(c.Text())
-			c.Send("Kết quả tìm kiếm với từ khóa: " + user_input)
+			c.Send("Kết quả (tối đa 100) tìm kiếm với từ khóa: " + user_input)
 			assistants.StudentSearchFetch(c, user_input)
 			users.SetUserStateFetching(db, user, false)
-			c.Send("Chế độ tìm kiếm thông tin sinh viên đã đóng!🔒")
-			c.Send("Tùy chọn tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
+
+			// c.Send("Chế độ tìm kiếm thông tin sinh viên đã đóng!🔒")
+
+			// Emulate red emphasis using emojis
+			htmlMessage := `<b>🔴 Chế độ tìm kiếm thông tin sinh viên đã đóng!🔒⛔</b>`
+			c.Send(htmlMessage, &telebot.SendOptions{ParseMode: telebot.ModeHTML})
+
+			c.Send("Các tùy chọn nghiệp vụ tiếp theo 👇", helpers.Student_Check_Menu_InlineKeys)
 			return nil
 		}
 

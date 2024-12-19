@@ -17,11 +17,11 @@ func SearchStudent(b *tele.Bot) {
 
 func StartSearchStudent(b *tele.Bot) {
 	b.Handle(&helpers.Students_Search, func(c tele.Context) error {
-		c.Send("Chế độ tìm kiếm đã bật! Nhập thông tin (tên, ngày sinh, quê, hoặc lớp vv...) bất kì để tìm sinh viên! ╰┈➤⤵")
+		c.Send("Chế độ tìm kiếm đã bật! 🌿 Nhập thông tin (tên, ngày sinh, quê, hoặc lớp vv...) bất kì để tìm sinh viên! ╰┈➤⤵")
 		user_id := c.Sender().ID
 		db := sqlite.DB()
 		users.SetUserStateFetching(db, user_id, true)
-		fmt.Println(users.UserStateFetching(db, user_id))
+		users.SetUserStateChecking(db, user_id, false)
 		c.Send(user_id)
 		return nil
 	})
@@ -32,17 +32,42 @@ func KeepSearchingStudent(b *tele.Bot) {
 		user_id := c.Sender().ID
 		db := sqlite.DB()
 		users.SetUserStateFetching(db, user_id, true)
-		c.Send("Chế độ tìm kiếm đã được bật lại. Xin nhập từ khóa tìm kiếm! 😀")
+		users.SetUserStateChecking(db, user_id, false)
+		c.Send("Chế độ tìm kiếm đã được bật lại. Xin nhập từ khóa tìm kiếm! 🌿")
 		return nil
 	})
 }
 
 func StudentSearchFetch(c tele.Context, keyword string) error {
 	db := sqlite.DBSTUDENT()
-	student_search := students.SearchStudent(db, keyword)
-	for _, student := range student_search {
-		fmt.Println(student.Name)
-		c.Send(student.Name)
+	studentSearch := students.SearchStudent(db, keyword)
+
+	if len(studentSearch) == 0 {
+		message := fmt.Sprintf("Không tìm thấy thông tin với từ khóa %s.", keyword)
+		return c.Send(message)
 	}
+
+	for _, student := range studentSearch {
+		message := fmt.Sprintf(
+			"Tên: %s\nMã sinh viên: %s\nGiới tính: %s\nNgày sinh: %s\nLớp: %s\nDân tộc: %s\nCăn cước: %s\nPhone: %s\nEmail: %s\nTỉnh: %s\nĐịa chỉ: %s\nGhi chú: %s",
+			student.Name,
+			student.StudentCode,
+			student.Gender,
+			student.DOB,
+			student.Class,
+			student.Ethnic,
+			student.NationalID,
+			student.Phone,
+			student.Email,
+			student.Province,
+			student.Address,
+			student.Notes,
+		)
+
+		if err := c.Send(message); err != nil {
+			return fmt.Errorf("failed to send message for student %s: %w", student.Name, err)
+		}
+	}
+
 	return nil
 }

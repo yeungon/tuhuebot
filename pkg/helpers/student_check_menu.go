@@ -21,21 +21,23 @@ var Back_To_Main_Menu_Assistant = tele.InlineButton{
 // Define five inline buttons
 var Keep_Checking_Student = tele.InlineButton{
 	Unique: "btn_callback1_keep_check_student",
-	Text:   "→Xem sinh viên khác",
+	Text:   "Tra điểm sinh viên theo mã sinh viên",
 	Data:   "button1_clicked",
 }
 
 // Define five inline buttons
 var Keep_Searching_Student = tele.InlineButton{
 	Unique: "btn_callback1_keep_searching_student",
-	Text:   "Tiếp tục tìm kiếm",
+	Text:   "Tiếp tục tìm kiếm thông tin sinh viên",
 	Data:   "button1_clicked",
 }
 
 // Export the inline keyboard with 5 buttons
 var Student_Check_Menu_InlineKeys = &tele.ReplyMarkup{
 	InlineKeyboard: [][]tele.InlineButton{
-		{Back_To_Main_Menu_Second, Back_To_Main_Menu_Assistant},
-		{Keep_Searching_Student, Keep_Checking_Student},
+		{Back_To_Main_Menu_Second},
+		{Back_To_Main_Menu_Assistant},
+		{Keep_Searching_Student},
+		{Keep_Checking_Student},
 	},
 }
