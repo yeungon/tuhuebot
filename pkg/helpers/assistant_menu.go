@@ -42,7 +42,7 @@ var Students_List = tele.InlineButton{
 // Define five inline buttons
 var Students_Check = tele.InlineButton{
 	Unique: "btn_callback1_student_check",
-	Text:   "Thông tin sinh viên",
+	Text:   "Tra điểm sinh viên theo mã SV",
 	Data:   "button1_clicked",
 }
 
