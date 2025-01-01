@@ -18,6 +18,10 @@ func HandleEvent(c tele.Context, month int) {
 		info_thang = 1
 	}
 
+	if info_thang < 1 {
+		info_thang = 12
+	}
+
 	introduction := "Các sự kiện đáng chú ý của tháng " + strconv.Itoa(info_thang) + ": "
 	c.Send(introduction)
 	for _, event := range events {
