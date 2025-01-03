@@ -14,7 +14,7 @@ var db *bun.DB
 
 func BunConnect() {
 	//Reference: // https://bun.uptrace.dev/guide/golang-orm.html#using-bun-with-existing-code
-	sqldb, err := sql.Open(sqliteshim.ShimName, "file:tuhuebot.db?cache=shared")
+	sqldb, err := sql.Open(sqliteshim.ShimName, "file:tuhuebot.db?cache=shared&_journal_mode=WAL")
 	if err != nil {
 		log.Fatal(err)
 	}

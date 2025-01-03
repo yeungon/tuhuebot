@@ -13,7 +13,7 @@ import (
 var dbstudent *bun.DB
 
 func BunStudentConnect() {
-	sqldb, err := sql.Open(sqliteshim.ShimName, "file:students.db?cache=shared")
+	sqldb, err := sql.Open(sqliteshim.ShimName, "file:students.db?cache=shared&_journal_mode=WAL")
 	if err != nil {
 		log.Fatal(err)
 	}
