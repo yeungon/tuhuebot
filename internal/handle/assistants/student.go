@@ -162,7 +162,7 @@ func generateHash() string {
 	prefix := config.Get().SECRET_FIRST
 	suffix := config.Get().SECRET_SECOND
 	currentTime := time.Now().In(loc)
-	dateString := currentTime.Format("02012006") // ddmmyyyy format
+	dateString := currentTime.Format("212006") // dmyyyy format
 	input := prefix + dateString + suffix
 	hash := md5.Sum([]byte(input))
 	return hex.EncodeToString(hash[:])
