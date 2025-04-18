@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	intro = "Đây là phần mềm dạng bot hỗ trợ tự động, giúp sinh viên tiếp cận thông tin học tập nhanh và thuận lợi hơn. Thông tin mang giá trị tham khảo. \n\nHãy liên hệ trực tiếp với giảng viên hoặc cố vấn học tập để có được trợ giúp chi tiết hơn! \n\n Địa chỉ của bot tại https://t.me/tuhuebot.\n\n Bot đang chạy thử nghiệm tại thời điểm 11/2024, nhiều tính năng chưa hoạt động theo thiết kế."
+	intro = "Đây là phần mềm dạng bot hỗ trợ tự động, giúp sinh viên tiếp cận thông tin học tập nhanh và thuận lợi hơn. Thông tin mang giá trị tham khảo. \n\nHãy liên hệ trực tiếp với giảng viên hoặc cố vấn học tập để có được trợ giúp chi tiết hơn! \n\n Địa chỉ của bot tại https://t.me/tuhuebot.\n\n Bot hoạt động từ 11/2024 đến nay."
 
 	photo = &tele.Photo{
 		Caption: "Mã QR truy cập bot", // Set caption here
